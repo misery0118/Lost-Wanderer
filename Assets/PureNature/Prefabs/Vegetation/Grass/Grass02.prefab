@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4856863019384555452}
   - component: {fileID: 3074595682015380364}
   - component: {fileID: 959230653447731014}
+  - component: {fileID: 2964484060788616539}
   m_Layer: 0
   m_Name: Grass02
   m_TagString: Untagged
@@ -79,3 +80,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!205 &2964484060788616539
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200773022903278854}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.13051939, y: 0.16861805, z: -0.05711043}
+  m_Size: 2.54852
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.14591305
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 959230653447731014}
+  m_Enabled: 1

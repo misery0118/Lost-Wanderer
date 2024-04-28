@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2749617569487317734}
   - component: {fileID: 129599252684217900}
   - component: {fileID: 2709196273257830361}
+  - component: {fileID: -2171846596731038221}
   m_Layer: 0
   m_Name: WaterLily02
   m_TagString: Untagged
@@ -94,3 +95,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5441825197239465692, guid: b436bc3d04d41884f9f99542d590d1e7, type: 3}
+--- !u!205 &-2171846596731038221
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931078479664234489}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: -0.72194844, z: 0}
+  m_Size: 1.6434816
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.200916
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 129599252684217900}
+  m_Enabled: 1
