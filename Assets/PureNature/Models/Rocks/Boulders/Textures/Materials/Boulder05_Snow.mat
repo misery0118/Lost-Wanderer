@@ -133,6 +133,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _2ndNormalPower: 1
+    - _AlphaCutoff: 0.5
     - _BlendNormals: 0
     - _BumpScale: 1
     - _ChromaticAberration: 0.1
