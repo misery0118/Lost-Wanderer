@@ -276,7 +276,6 @@ Shader "Custom/WaterFall"
 			sampler2D _NormalMap;
 			sampler2D _FoamNormal;
 			sampler2D _FoamMask;
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
@@ -767,7 +766,6 @@ Shader "Custom/WaterFall"
 			#endif
 			CBUFFER_END
 			sampler2D _FoamMask;
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			
@@ -1061,7 +1059,6 @@ Shader "Custom/WaterFall"
 			#endif
 			CBUFFER_END
 			sampler2D _FoamMask;
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			
@@ -1345,7 +1342,6 @@ Shader "Custom/WaterFall"
 			sampler2D _NormalMap;
 			sampler2D _FoamNormal;
 			sampler2D _FoamMask;
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
@@ -1680,7 +1676,6 @@ Shader "Custom/WaterFall"
 			sampler2D _NormalMap;
 			sampler2D _FoamNormal;
 			sampler2D _FoamMask;
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			inline float4 ASE_ComputeGrabScreenPos( float4 pos )

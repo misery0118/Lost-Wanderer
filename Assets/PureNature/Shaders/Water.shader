@@ -305,7 +305,6 @@ Shader "Custom/Water"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 			sampler2D _FoamNormal;
@@ -966,7 +965,6 @@ Shader "Custom/Water"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -1318,7 +1316,6 @@ Shader "Custom/Water"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -1659,7 +1656,6 @@ Shader "Custom/Water"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 			sampler2D _FoamNormal;
@@ -2145,7 +2141,6 @@ Shader "Custom/Water"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 			sampler2D _FoamNormal;
