@@ -13,6 +13,9 @@ public class ButtonManager : MonoBehaviour
     public float animationDuration = 0.5f;
     public float animationOffset = 25f;
 
+    public AudioSource buttonSound;
+    public AudioSource buttonClickSound;
+
     private Vector3[] originalPositions;
     private int selectedIndex = -1;
 
@@ -42,14 +45,13 @@ public class ButtonManager : MonoBehaviour
         // Attach a listener to detect clicks on the background panel
         EventTrigger backgroundTrigger = backgroundPanel.GetComponent<EventTrigger>();
         if (backgroundTrigger == null)
-    {
-        Debug.LogError("Background panel does not have an EventTrigger component.");
-        return;
-    }
+        {
+            Debug.LogError("Background panel does not have an EventTrigger component.");
+            return;
+        }
         EventTrigger.Entry clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
         clickEntry.callback.AddListener((data) => { OnBackgroundClicked(); });
         backgroundTrigger.triggers.Add(clickEntry);
-
     }
 
     // Function to attach events to a button
@@ -100,6 +102,12 @@ public class ButtonManager : MonoBehaviour
             selectedIndex = index;
             // Animate the clicked button to move to the left
             LeanTween.moveLocalX(GetButtonObject(index), originalPositions[index].x - animationOffset, animationDuration);
+
+            // Play the button click sound
+            if (buttonClickSound != null)
+            {
+                buttonClickSound.PlayOneShot(buttonClickSound.clip);
+            }
         }
     }
 
@@ -111,6 +119,12 @@ public class ButtonManager : MonoBehaviour
 
         // Animate the button to move to the left only if not already highlighted
         LeanTween.moveLocalX(GetButtonObject(index), originalPositions[index].x - animationOffset, animationDuration);
+
+        // Play the button highlight sound
+        if (buttonSound != null && buttonSound.clip != null)
+        {
+            buttonSound.PlayOneShot(buttonSound.clip);
+        }
     }
 
     // Function to handle button unhighlight
