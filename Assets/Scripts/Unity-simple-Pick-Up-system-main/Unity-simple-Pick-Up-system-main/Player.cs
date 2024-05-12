@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
         if (hit.collider != null)
         {
-            hit.collider.GetComponent<Highlight>()?.ToggleHighlight(false);
+            hit.collider.GetComponent<Highlight>()?.ToggleOutline(false);
             pickUpUI.SetActive(false);
         }
 
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
             hitRange, 
             pickableLayerMask))
         {
-            hit.collider.GetComponent<Highlight>()?.ToggleHighlight(true);
+            hit.collider.GetComponent<Highlight>()?.ToggleOutline(true);
             pickUpUI.SetActive(true);
 
         }
