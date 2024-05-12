@@ -12,9 +12,11 @@ namespace MenuSystem
         public GameObject titleScreen;
         public GameObject mainMenu;
         public GameObject storyExpand;
+        public GameObject quitExpand; // New QuitExpand GameObject
         public CanvasGroup titleScreenCanvasGroup;
         public CanvasGroup mainMenuCanvasGroup;
         public CanvasGroup storyExpandCanvasGroup;
+        public CanvasGroup quitExpandCanvasGroup; // New QuitExpand CanvasGroup
         public AudioSource startSound;
         public AudioSource backSound;
         public float fadeDuration = 1f;
@@ -22,12 +24,13 @@ namespace MenuSystem
         private bool titleScreenActive = true;
 
         public bool storyExpandActive = false;
-
+        public bool quitExpandActive = false;
         void Start()
         {
             titleScreenCanvasGroup.alpha = 1f;
             mainMenuCanvasGroup.alpha = 0f;
             storyExpandCanvasGroup.alpha = 0f;
+            quitExpandCanvasGroup.alpha = 0f;
         }
 
         void Update()
@@ -37,10 +40,13 @@ namespace MenuSystem
                 StartCoroutine(FadeOutTitleScreen());
                 titleScreenActive = false;
             }
-            else if (buttonManager.IsStoryExpandActive() && Input.GetKeyDown(KeyCode.Backspace))
+            else if ((buttonManager.IsStoryExpandActive() || buttonManager.IsQuitExpandActive()) && Input.GetKeyDown(KeyCode.Backspace))
             {
-                StartCoroutine(FadeOutStoryExpand());
+                if (storyExpandActive)
+                    StartCoroutine(FadeOutStoryExpand());
+                else if (buttonManager.IsQuitExpandActive()) // Check if quitExpand is active
                 storyExpandActive = false;
+                quitExpandActive = false; // Reset quitExpand active status
             }
             else if (!titleScreenActive && Input.GetKeyDown(KeyCode.Backspace))
             {
@@ -88,6 +94,7 @@ namespace MenuSystem
             titleScreen.SetActive(true);
             mainMenu.SetActive(false);
             storyExpand.SetActive(false);
+            quitExpand.SetActive(false); // Hide quitExpand
             buttonManager.Unselect();
             backSound.Play();
             StartCoroutine(FadeInTitleScreen());
@@ -114,6 +121,7 @@ namespace MenuSystem
                 yield return null;
             }
             storyExpand.SetActive(true);
+            storyExpandActive = true; // Set storyExpand as active
         }
 
         public IEnumerator FadeOutStoryExpand()
@@ -126,6 +134,33 @@ namespace MenuSystem
                 yield return null;
             }
             storyExpand.SetActive(false);
+            storyExpandActive = false; // Set storyExpand as inactive
+        }
+
+        public IEnumerator FadeInQuitExpand()
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                quitExpandCanvasGroup.alpha = elapsedTime / fadeDuration;
+                yield return null;
+            }
+            quitExpand.SetActive(true);
+            quitExpandActive = true; // Set quitExpand as active
+        }
+
+        public IEnumerator FadeOutQuitExpand()
+        {
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                quitExpandCanvasGroup.alpha = 1f - (elapsedTime / fadeDuration);
+                yield return null;
+            }
+            quitExpand.SetActive(false);
+            quitExpandActive = false; // Set quitExpand as inactive
         }
     }
 }

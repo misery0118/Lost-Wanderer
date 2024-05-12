@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.Mathematics;
 
 namespace MenuSystem
 {
@@ -16,6 +17,11 @@ namespace MenuSystem
         public Button newGameButton;
         public Button loadGameButton;
         public Button chapterSelectButton;
+
+        // Quit Expanded Buttons
+        public GameObject quitExpand;
+        public Button YesButton;
+        public Button NoButton;
 
         public GameObject backgroundPanel;
         public GameObject storyExpand;
@@ -39,23 +45,29 @@ namespace MenuSystem
             // Store the original positions of all buttons
             originalPositions = new Vector3[]
             {
-            storyButton.transform.localPosition,
-            extrasButton.transform.localPosition,
-            optionsButton.transform.localPosition,
-            quitButton.transform.localPosition,
-            newGameButton.transform.localPosition,
-            loadGameButton.transform.localPosition,
-            chapterSelectButton.transform.localPosition
+                storyButton.transform.localPosition,
+                extrasButton.transform.localPosition,
+                optionsButton.transform.localPosition,
+                quitButton.transform.localPosition,
+                newGameButton.transform.localPosition,
+                loadGameButton.transform.localPosition,
+                chapterSelectButton.transform.localPosition,
+                YesButton.transform.localPosition,
+                NoButton.transform.localPosition
             };
 
             // Attach functions to handle button events for all buttons
             AttachButtonEvents(storyButton, 0, ShowStoryExpand);
             AttachButtonEvents(extrasButton, 1);
             AttachButtonEvents(optionsButton, 2);
-            AttachButtonEvents(quitButton, 3);
+            AttachButtonEvents(quitButton, 3, ShowQuitExpand);
             AttachButtonEvents(newGameButton, 4);
             AttachButtonEvents(loadGameButton, 5);
             AttachButtonEvents(chapterSelectButton, 6);
+            AttachButtonEvents(YesButton, 7);
+            AttachButtonEvents(NoButton, 8);
+
+
 
             // Attach a listener to detect clicks on the background panel
             EventTrigger backgroundTrigger = backgroundPanel.GetComponent<EventTrigger>();
@@ -82,6 +94,18 @@ namespace MenuSystem
             }
         }
 
+        //Button Function
+        private void ShowQuitExpand()
+        {
+            // Activate the quitExpand GameObject if it's not already active
+            if (!quitExpand.activeSelf)
+            {
+                quitExpand.SetActive(true);
+
+                // Start the fade-in animation for quitExpand
+                StartCoroutine(mainMenu.FadeInQuitExpand());
+            }
+        }
 
         // Function to attach events to a button
         void AttachButtonEvents(Button button, int index, UnityEngine.Events.UnityAction clickHandler = null)
@@ -111,7 +135,8 @@ namespace MenuSystem
         }
 
         private void OnButtonClicked(int index, UnityEngine.Events.UnityAction clickHandler)
-        {
+        {   
+
             if (selectedIndex == index)
             {
                 // If the same button is clicked again, deselect it and return to its original position
@@ -131,12 +156,28 @@ namespace MenuSystem
                 // Animate the clicked button to move to the left
                 LeanTween.moveLocalX(GetButtonObject(index), originalPositions[index].x - animationOffset, animationDuration);
 
-                // If storyExpand is active and one of the buttons (extras, options, quit) is clicked,
-                // close the storyExpand panel
-                if (IsStoryExpandActive() && (index == 1 || index == 2 || index == 3))
+                // Hide QuitExpand when No Button is pressed
+                if (selectedIndex == 8)
+                {
+                    StartCoroutine(mainMenu.FadeOutQuitExpand());
+                    mainMenu.quitExpandActive = false;
+                }
+
+                // Hide QuitExpand when Story Button is pressed
+                if (selectedIndex == 0)
+                {
+                    StartCoroutine(mainMenu.FadeOutQuitExpand());
+                    mainMenu.quitExpandActive = false;
+                }
+
+                // If storyExpand or quitExpand is active and one of the buttons (extras, options, quit) is clicked,
+                // close the storyExpand or quitExpand panel accordingly
+                if ((IsStoryExpandActive() || IsQuitExpandActive()) && (index == 1 || index == 2 || index == 3))
                 {
                     StartCoroutine(mainMenu.FadeOutStoryExpand());
                     mainMenu.storyExpandActive = false;
+                    StartCoroutine(mainMenu.FadeOutQuitExpand());
+                    mainMenu.quitExpandActive = false;
                 }
 
                 // Play the button click sound
@@ -202,6 +243,10 @@ namespace MenuSystem
                     return loadGameButton.gameObject;
                 case 6:
                     return chapterSelectButton.gameObject;
+                case 7:
+                    return YesButton.gameObject;
+                case 8:
+                    return NoButton.gameObject;
                 default:
                     return null;
             }
@@ -215,8 +260,16 @@ namespace MenuSystem
             {
                 ReturnToOriginalPosition(selectedIndex);
                 selectedIndex = -1;
-                StartCoroutine(mainMenu.FadeOutStoryExpand());
-                mainMenu.storyExpandActive = false;
+                if (IsStoryExpandActive())
+                {
+                    StartCoroutine(mainMenu.FadeOutStoryExpand());
+                    mainMenu.storyExpandActive = false;
+                }
+                if (IsQuitExpandActive())
+                {
+                    StartCoroutine(mainMenu.FadeOutQuitExpand());
+                    mainMenu.quitExpandActive = false;
+                }
             }
         }
 
@@ -226,8 +279,8 @@ namespace MenuSystem
             if (selectedIndex != -1)
             {
                 ReturnToOriginalPosition(selectedIndex);
+                selectedIndex = -1;
             }
-
         }
 
         public bool IsStoryExpandActive()
@@ -235,19 +288,32 @@ namespace MenuSystem
             return storyExpand != null && storyExpand.activeSelf;
         }
 
+        public bool IsQuitExpandActive()
+        {
+            return quitExpand != null && quitExpand.activeSelf;
+        }
+
         // Function to handle Backspace key press
         private void Update()
         {
-            if (IsStoryExpandActive() && Input.GetKeyDown(KeyCode.Backspace))
+            if ((IsStoryExpandActive() || IsQuitExpandActive()) && Input.GetKeyDown(KeyCode.Backspace))
             {
                 // Deselect the currently selected button (if any) and return it to its original position
                 if (selectedIndex != -1)
                 {
                     EventSystem.current.SetSelectedGameObject(null);
                     ReturnToOriginalPosition(selectedIndex);
-                    StartCoroutine(mainMenu.FadeOutStoryExpand());
-                    mainMenu.storyExpandActive = false;
                     selectedIndex = -1;
+                    if (IsStoryExpandActive())
+                    {
+                        StartCoroutine(mainMenu.FadeOutStoryExpand());
+                        mainMenu.storyExpandActive = false;
+                    }
+                    if (IsQuitExpandActive())
+                    {
+                        StartCoroutine(mainMenu.FadeOutQuitExpand());
+                        mainMenu.quitExpandActive = false;
+                    }
                 }
             }
         }
