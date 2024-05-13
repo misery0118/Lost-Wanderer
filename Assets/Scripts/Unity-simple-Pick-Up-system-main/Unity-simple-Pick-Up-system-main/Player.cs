@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [Header("Player")]
     [SerializeField]
     private LayerMask pickableLayerMask;
 
