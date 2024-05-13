@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private CloudsVolume cloudsVolume;
 
     [SerializeField, Range(0, 24)] private float TimeOfDay;
-    [SerializeField] private Material[] cloudsMaterials; 
+    [SerializeField] private Material[] cloudsMaterials;
 
     private void Update()
     {
@@ -37,7 +37,16 @@ public class TimeManager : MonoBehaviour
         {
             DirectionalLight.color = Preset.DirectionalColor.Evaluate(timePercent);
 
-            DirectionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - 90f, 170f, 0));
+            float angle = (timePercent * 360f) - 90f;
+if (angle < 0) angle += 360f; // Ensure the angle is positive
+float horizonAngle = 90f; // Adjust as needed for your scene
+if (timePercent < 0.25f || timePercent > 0.75f) // Nighttime or early morning
+{
+    horizonAngle = 0f; // Sun is below the horizon
+}
+DirectionalLight.transform.localRotation = Quaternion.Euler(new Vector3(angle, horizonAngle, 0));
+
+
         }
 
         if (cloudsVolume != null && cloudsMaterials != null && cloudsMaterials.Length > 0)
@@ -47,36 +56,36 @@ public class TimeManager : MonoBehaviour
             cloudsVolume.SetCloudMaterial(selectedMaterial);
         }
 
-    if (RenderSettings.skybox != null)
-    {
-        Material skyMaterial = GetSkyMaterialForTime(timePercent);
-        RenderSettings.skybox = skyMaterial;
+        if (RenderSettings.skybox != null)
+        {
+            Material skyMaterial = GetSkyMaterialForTime(timePercent);
+            RenderSettings.skybox = skyMaterial;
+        }
     }
-}
 
-private Material GetSkyMaterialForTime(float timePercent)
-{
-    if (timePercent < 0.25f) // Assuming 6 AM to be the start of the day (0.00)
+    private Material GetSkyMaterialForTime(float timePercent)
     {
-        return Preset.skyNight;
+        if (timePercent < 0.25f) // Assuming 6 AM to be the start of the day (0.00)
+        {
+            return Preset.skyNight;
+        }
+        else if (timePercent < 0.5f) // Assuming 6 PM to be the start of the night (0.25)
+        {
+            return Preset.skyOvercast;
+        }
+        else if (timePercent < 0.75f) // Assuming 6 PM to be the start of the night (0.25)
+        {
+            return Preset.skyDay;
+        }
+        else if (timePercent < 0.85f)
+        {
+            return Preset.skySunset;
+        }
+        else
+        {
+            return Preset.skyNight;
+        }
     }
-    else if (timePercent < 0.5f) // Assuming 6 PM to be the start of the night (0.25)
-    {
-        return Preset.skyOvercast;
-    }
-    else if (timePercent < 0.75f) // Assuming 6 PM to be the start of the night (0.25)
-    {
-        return Preset.skyDay;
-    }
-    else if (timePercent < 0.85f) 
-    {
-        return Preset.skySunset;
-    }
-    else
-    {
-        return Preset.skyNight;
-    }
-}
 
     private void OnValidate()
     {
