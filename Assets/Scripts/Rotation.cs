@@ -8,26 +8,27 @@ public class Rotate : MonoBehaviour
     private bool isRotating = false;
     private bool reverseRotation = false;
 
+    public void StartRotation()
+    {   
+        Debug.Log("natatawag");
+        isRotating = true;
+    }
+
+    public void StartReverseRotation()
+    {
+        isRotating = true;
+        reverseRotation = true;
+    }
+
+    public void StopRotation()
+    {
+        isRotating = false;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            isRotating = true;
-            reverseRotation = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            isRotating = true;
-            reverseRotation = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.T))
-        {
-            isRotating = false;
-        }
-
         if (isRotating)
         {
-            // Rotate around the y-axis automatically
             float direction = reverseRotation ? -1 : 1;
             transform.Rotate(Vector3.up, direction * Speed * Time.deltaTime);
         }

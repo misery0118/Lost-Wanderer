@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,10 +8,16 @@ public class Player : MonoBehaviour
     private LayerMask pickableLayerMask;
 
     [SerializeField]
+    private LayerMask laserLayerMask; // New layer mask for lasers
+
+    [SerializeField]
     private Transform playerCameraTransform;
 
     [SerializeField]
     private GameObject pickUpUI;
+
+    [SerializeField]
+    private GameObject RotatePanel;
 
     internal void AddHealth(int healthBoost)
     {
@@ -31,7 +35,7 @@ public class Player : MonoBehaviour
     private GameObject inHandItem;
 
     [SerializeField]
-    private InputActionReference interactionInput, dropInput, useInput;
+    private InputActionReference interactionInput, dropInput, useInput, Rotate;
 
     private RaycastHit hit;
 
@@ -43,6 +47,19 @@ public class Player : MonoBehaviour
         interactionInput.action.performed += PickUp;
         dropInput.action.performed += Drop;
         useInput.action.performed += Use;
+        Rotate.action.performed += Rotation;
+    }
+
+    private void Rotation(InputAction.CallbackContext obj)
+    {
+        if (hit.collider != null && hit.collider.GetComponent<Pointer>())
+        {
+            Vector2 rotationInput = obj.ReadValue<Vector2>();
+            float rotationSpeed = 50f;
+
+            Debug.Log("Dapat iikot");
+            hit.collider.transform.Rotate(Vector3.up, rotationInput.y * rotationSpeed * Time.deltaTime, Space.World);
+        }
     }
 
     private void Use(InputAction.CallbackContext obj)
@@ -73,7 +90,7 @@ public class Player : MonoBehaviour
 
     private void PickUp(InputAction.CallbackContext obj)
     {
-        if(hit.collider != null && inHandItem == null)
+        if (hit.collider != null && inHandItem == null)
         {
             IPickable pickableItem = hit.collider.GetComponent<IPickable>();
             if (pickableItem != null)
@@ -92,23 +109,23 @@ public class Player : MonoBehaviour
                 inHandItem.transform.position = Vector3.zero;
                 inHandItem.transform.rotation = Quaternion.identity;
                 inHandItem.transform.SetParent(pickUpParent.transform, false);
-                if(rb != null)
+                if (rb != null)
                 {
                     rb.isKinematic = true;
                 }
                 return;
-              }
-                if (hit.collider.GetComponent<Item>())
-              {
-                  Debug.Log("It's a useless item!");
-                  inHandItem = hit.collider.gameObject;
-                  inHandItem.transform.SetParent(pickUpParent.transform, true);
-                  if (rb != null)
-                  {
-                      rb.isKinematic = true;
-                  }
-                  return;
-              }
+            }
+            if (hit.collider.GetComponent<Item>())
+            {
+                Debug.Log("It's a useless item!");
+                inHandItem = hit.collider.gameObject;
+                inHandItem.transform.SetParent(pickUpParent.transform, true);
+                if (rb != null)
+                {
+                    rb.isKinematic = true;
+                }
+                return;
+            }
         }
     }
 
@@ -119,6 +136,7 @@ public class Player : MonoBehaviour
         {
             hit.collider.GetComponent<Highlight>()?.ToggleOutline(false);
             pickUpUI.SetActive(false);
+            RotatePanel.SetActive(false);
         }
 
         if (inHandItem != null)
@@ -126,16 +144,15 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (Physics.Raycast(
-            playerCameraTransform.position, 
-            playerCameraTransform.forward, 
-            out hit, 
-            hitRange, 
-            pickableLayerMask))
+        if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, pickableLayerMask))
         {
             hit.collider.GetComponent<Highlight>()?.ToggleOutline(true);
             pickUpUI.SetActive(true);
-
+        }
+        else if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out hit, hitRange, laserLayerMask))
+        {
+            hit.collider.GetComponent<Highlight>()?.ToggleOutline(true);
+            RotatePanel.SetActive(true);
         }
     }
 }
