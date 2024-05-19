@@ -5,46 +5,31 @@ using UnityEngine;
 public class Rotate : MonoBehaviour
 {
     public float Speed = 10f;
-
     private bool isRotating = false;
+    private bool reverseRotation = false;
 
-    private float startMousePositionX;
-    private float startMousePositionY;
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
             isRotating = true;
-            startMousePositionX = Input.mousePosition.x;
-            startMousePositionY = Input.mousePosition.y;
+            reverseRotation = false;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            isRotating = true;
+            reverseRotation = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.T))
         {
             isRotating = false;
         }
 
         if (isRotating)
         {
-            float currentMousePositionX = Input.mousePosition.x;
-            float currentMousePositionY = Input.mousePosition.y;
-            float mouseMovementX = currentMousePositionX - startMousePositionX;
-            float mouseMovementY = currentMousePositionY - startMousePositionY;
-
-            // Rotate around the y-axis based on horizontal mouse movement
-            transform.Rotate(Vector3.up, -mouseMovementX * Speed * Time.deltaTime);
-
-            // Rotate around the x-axis based on vertical mouse movement
-            transform.Rotate(Vector3.right, mouseMovementY * Speed * Time.deltaTime);
-
-            startMousePositionX = currentMousePositionX;
-            startMousePositionY = currentMousePositionY;
+            // Rotate around the y-axis automatically
+            float direction = reverseRotation ? -1 : 1;
+            transform.Rotate(Vector3.up, direction * Speed * Time.deltaTime);
         }
     }
 }
