@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-
     public float Speed = 10f;
 
     private bool isRotating = false;
 
-    private float startMousePosition;
+    private float startMousePositionX;
+    private float startMousePositionY;
 
-void Start()
-{
-    
-}
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
@@ -22,7 +22,8 @@ void Start()
         if (Input.GetMouseButtonDown(0))
         {
             isRotating = true;
-            startMousePosition = Input.mousePosition.x;
+            startMousePositionX = Input.mousePosition.x;
+            startMousePositionY = Input.mousePosition.y;
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -31,11 +32,19 @@ void Start()
 
         if (isRotating)
         {
-            float currentMousePosition = Input.mousePosition.x;
-            float mouseMovement = currentMousePosition - startMousePosition;
+            float currentMousePositionX = Input.mousePosition.x;
+            float currentMousePositionY = Input.mousePosition.y;
+            float mouseMovementX = currentMousePositionX - startMousePositionX;
+            float mouseMovementY = currentMousePositionY - startMousePositionY;
 
-            transform.Rotate(Vector3.up, -mouseMovement * Speed * Time.deltaTime);
-            startMousePosition = currentMousePosition;
+            // Rotate around the y-axis based on horizontal mouse movement
+            transform.Rotate(Vector3.up, -mouseMovementX * Speed * Time.deltaTime);
+
+            // Rotate around the x-axis based on vertical mouse movement
+            transform.Rotate(Vector3.right, mouseMovementY * Speed * Time.deltaTime);
+
+            startMousePositionX = currentMousePositionX;
+            startMousePositionY = currentMousePositionY;
         }
     }
 }
