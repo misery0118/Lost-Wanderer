@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LockLook",
+                    "type": "Button",
+                    "id": "7be7b73b-9bfb-4aa2-911b-e3fb652c5d14",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -296,6 +305,17 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b73e9468-f7c9-4f8b-91dc-8f82eb9bef99",
+                    "path": "<Keyboard>/\\",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "LockLook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

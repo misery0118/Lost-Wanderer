@@ -25,15 +25,26 @@ namespace StarterAssets
 		{
 			MoveInput(value.Get<Vector2>());
 		}
+    public void OnLook(InputValue value)
+    {
+        bool isAltPressed = Keyboard.current.altKey.isPressed;
 
-		public void OnLook(InputValue value)
-		{
-			if(cursorInputForLook)
-			{
-				LookInput(value.Get<Vector2>());
-			}
-		}
-
+        if (cursorInputForLook)
+        {
+            if (isAltPressed)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                LookInput(new Vector2(0, 0));
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                LookInput(value.Get<Vector2>());
+            }
+        }
+    }
 		public void OnJump(InputValue value)
 		{
 			JumpInput(value.isPressed);
