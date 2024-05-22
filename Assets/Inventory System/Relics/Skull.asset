@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   itemName: Skull Relic
-  value: 1
-  Icon: {fileID: -552359904, guid: 1b1e1a4c7b32749d48e98546100a1ad1, type: 3}
+  value: 10
+  icon: {fileID: -552359904, guid: 1b1e1a4c7b32749d48e98546100a1ad1, type: 3}

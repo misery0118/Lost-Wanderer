@@ -5,5 +5,5 @@ public class Items : ScriptableObject {
     public int id;
     public string itemName;
     public int value;
-    public Sprite Icon;
+    public Sprite icon;
 }

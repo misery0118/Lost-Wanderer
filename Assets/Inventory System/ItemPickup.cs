@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Items Items;
+    public Items ItemData;
 
     void Pickup() {
-        InventoryManager.Instance.Add(Items);
+        InventoryManager.Instance.Add(ItemData);
         Destroy(gameObject);
     }
 
