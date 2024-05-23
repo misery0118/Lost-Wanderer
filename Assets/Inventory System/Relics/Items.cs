@@ -7,3 +7,4 @@ public class Items : ScriptableObject {
     public int value;
     public Sprite icon;
 }
+ 
