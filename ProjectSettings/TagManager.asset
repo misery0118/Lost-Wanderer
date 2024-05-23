@@ -8,6 +8,8 @@ TagManager:
   - Mirror
   - LaserPointer
   - Refract
+  - Sphere
+  - Cube
   layers:
   - Default
   - TransparentFX

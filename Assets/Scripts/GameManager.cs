@@ -5,11 +5,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // Singleton instance
     public CubeColorChanger[] cubes; // Array to store all the cubes
+    public SphereColorChanger[] spheres; // Array to store all the spheres
     public GameObject door; // Reference to the door object
     public float revertColorDelay = 1f; // Delay before reverting the color back to original
 
     private int currentStep = 0; // Track the current step in the sequence
     private List<CubeColorChanger> correctCubes = new List<CubeColorChanger>(); // Track correctly triggered cubes
+    private List<SphereColorChanger> correctSpheres = new List<SphereColorChanger>(); // Track correctly triggered spheres
 
     void Awake()
     {
@@ -24,20 +26,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CubeTriggered(CubeColorChanger triggeredCube)
+    public void CubeTriggered(CubeColorChanger triggeredCube, SphereColorChanger triggeringSphere)
     {
         // Check if the triggered cube is the correct one in the sequence
-        if (triggeredCube.cubeIndex == currentStep)
+        if (triggeredCube.cubeIndex == currentStep && triggeringSphere.sphereIndex == currentStep)
         {
             // Change the cube's color to green
             triggeredCube.SetColor(Color.green);
             correctCubes.Add(triggeredCube); // Add to the list of correct cubes
+            correctSpheres.Add(triggeringSphere); // Add to the list of correct spheres
             currentStep++;
+
+            // Lock the sphere's position
+            triggeringSphere.LockPosition(triggeredCube.transform.position);
 
             // Check if the player completed the sequence
             if (currentStep >= cubes.Length)
             {
-                PuzzleComplete();
+                PuzzleComplete(); // Notify puzzle completion
                 UnlockDoor();
             }
         }
@@ -46,6 +52,10 @@ public class GameManager : MonoBehaviour
             // Change the wrong cube's color to red and revert back to original color after delay
             triggeredCube.SetColor(Color.red);
             triggeredCube.RevertToOriginalColor(revertColorDelay);
+            
+            // Allow the sphere to be moved again
+            triggeringSphere.UnlockPosition();
+
             // Reset the sequence
             ResetSequence();
         }
@@ -54,6 +64,7 @@ public class GameManager : MonoBehaviour
     private void PuzzleComplete()
     {
         Debug.Log("Puzzle Complete");
+        // You can add additional actions here when the puzzle is completed
     }
 
     private void UnlockDoor()
@@ -73,11 +84,14 @@ public class GameManager : MonoBehaviour
                 cube.ResetColor();
             }
         }
-        // Reset the colors of correctly triggered cubes
-        foreach (var cube in correctCubes)
+        foreach (var sphere in correctSpheres)
         {
-            cube.ResetColor();
+            if (sphere != null)
+            {
+                sphere.UnlockPosition(); // Ensure the spheres can be moved again
+            }
         }
         correctCubes.Clear(); // Clear the list of correct cubes
+        correctSpheres.Clear(); // Clear the list of correct spheres
     }
 }

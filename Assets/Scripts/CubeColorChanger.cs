@@ -15,10 +15,10 @@ public class CubeColorChanger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Sphere"))
         {
-            // Notify the GameManager that this cube was triggered
-            GameManager.Instance.CubeTriggered(this);
+            // Notify the GameManager that this cube was triggered by a sphere
+            GameManager.Instance.CubeTriggered(this, other.GetComponent<SphereColorChanger>());
         }
     }
 
