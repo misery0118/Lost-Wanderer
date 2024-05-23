@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FlashLight
   m_EditorClassIdentifier: 
   id: 1
-  itemName: Flash light
+  itemName: Flashlight
   value: 1
-  icon: {fileID: -552359904, guid: 1b1e1a4c7b32749d48e98546100a1ad1, type: 3}
+  icon: {fileID: -970324004, guid: e65a6bfa112574e2cb95bb4d55e30ffe, type: 3}
