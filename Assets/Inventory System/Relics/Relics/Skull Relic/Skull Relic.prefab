@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3969489835177618081}
   - component: {fileID: 52264649760318724}
   - component: {fileID: 2836521359542505934}
-  - component: {fileID: 5575271733489200181}
   m_Layer: 0
   m_Name: Skull Relic
   m_TagString: Untagged
@@ -86,16 +85,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5575271733489200181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4349814603224018971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dec70d87cdd945dea02eb28a8f90cd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Item: {fileID: 0}
