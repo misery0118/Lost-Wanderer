@@ -8,4 +8,3 @@ public class Relics : ScriptableObject {
     public int value;
     public Sprite icon;
 }
- 

@@ -6,4 +6,3 @@ public class RelicsController : MonoBehaviour
 {
     public Relics RelicData;
 }
- 

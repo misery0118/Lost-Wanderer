@@ -6,4 +6,3 @@ public class ItemController : MonoBehaviour
 {
     public Items ItemData;
 }
- 
