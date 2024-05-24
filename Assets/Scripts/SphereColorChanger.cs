@@ -33,7 +33,8 @@ public class SphereColorChanger : MonoBehaviour
             isLocked = true;
             rb.isKinematic = true; // Disable physics on the sphere
             col.enabled = false; // Disable the collider to prevent further interactions
-            StartCoroutine(MoveToPosition(position));
+            lockedPosition = position; // Store the position to lock to
+            StartCoroutine(MoveToPosition(lockedPosition)); // Move smoothly to the locked position
         }
     }
 
