@@ -53,7 +53,7 @@ public class Grabber : MonoBehaviour
         {
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-            selectedObject.transform.position = new Vector3(worldPosition.x, 0.25f, worldPosition.z);
+            selectedObject.transform.position = new Vector3(worldPosition.x, 1.2f, worldPosition.z);
 
             if (Input.GetMouseButtonDown(1))
             {
@@ -103,7 +103,8 @@ public class Grabber : MonoBehaviour
         if (closestCell != null)
         {
             Vector3 newPosition = closestCell.position;
-            newPosition.y += 0.25f; // Adjust the Y position to ensure the Quad is on top
+            newPosition.x += 0.01f; // Set the exact X position to the desired value
+            newPosition.y += 0f; // Adjust the Y position to ensure the Quad is on top
             obj.transform.position = newPosition;
             Debug.Log("Snapped " + obj.name + " to " + closestCell.name);
         }
@@ -119,8 +120,9 @@ public class Grabber : MonoBehaviour
             Vector3 objectPosition = objectsToSort[i].transform.position;
             Vector3 gridCellPosition = gridCells[i].position;
 
-            // Adjust for the Y offset used during snapping
-            gridCellPosition.y += 0.1f;
+            // Set the exact expected X and Y position
+            gridCellPosition.x += 0.01f;
+            gridCellPosition.y += 1.2f;
 
             if (Vector3.Distance(objectPosition, gridCellPosition) > 0.01f)
             {
