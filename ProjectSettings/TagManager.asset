@@ -10,6 +10,8 @@ TagManager:
   - Refract
   - Sphere
   - Cube
+  - GridCell
+  - drag
   layers:
   - Default
   - TransparentFX
