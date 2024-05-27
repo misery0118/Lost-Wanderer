@@ -6,13 +6,13 @@ public class Grabber : MonoBehaviour
 {
     private GameObject selectedObject;
     private Vector3 initialPosition;
-    public GameObject[] objectsToSort; // Objects to sort
+    public GameObject[] quadsToSort; // Quads to sort
     public Transform[] gridCells; // Grid cells to snap the Quads to
 
     private void Start()
     {
-        // Ensure that sortedPositions are set properly
-        Debug.Log("Initialization complete. Objects to sort: " + objectsToSort.Length);
+        // Ensure that quadsToSort are set properly
+        Debug.Log("Initialization complete. Quads to sort: " + quadsToSort.Length);
     }
 
     private void Update()
@@ -40,7 +40,10 @@ public class Grabber : MonoBehaviour
             else
             {
                 // Drop the selected object
-                SnapToGrid(selectedObject);
+                if (selectedObject.CompareTag("drag"))
+                {
+                    SnapToGrid(selectedObject);
+                }
                 selectedObject = null;
                 Cursor.visible = true;
 
@@ -53,7 +56,16 @@ public class Grabber : MonoBehaviour
         {
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-            selectedObject.transform.position = new Vector3(worldPosition.x, 1.2f, worldPosition.z);
+
+            // Keep the y position consistent for Quads
+            if (selectedObject.CompareTag("drag"))
+            {
+                selectedObject.transform.position = new Vector3(worldPosition.x, 0.8f, worldPosition.z);
+            }
+            else
+            {
+                selectedObject.transform.position = new Vector3(worldPosition.x, initialPosition.y, worldPosition.z);
+            }
 
             if (Input.GetMouseButtonDown(1))
             {
@@ -88,14 +100,16 @@ public class Grabber : MonoBehaviour
         // Find the closest grid cell to snap the object to
         float minDistance = Mathf.Infinity;
         Transform closestCell = null;
+        int closestCellIndex = -1;
 
-        foreach (var cell in gridCells)
+        for (int i = 0; i < gridCells.Length; i++)
         {
-            float distance = Vector3.Distance(obj.transform.position, cell.position);
+            float distance = Vector3.Distance(obj.transform.position, gridCells[i].position);
             if (distance < minDistance)
             {
                 minDistance = distance;
-                closestCell = cell;
+                closestCell = gridCells[i];
+                closestCellIndex = i;
             }
         }
 
@@ -103,38 +117,34 @@ public class Grabber : MonoBehaviour
         if (closestCell != null)
         {
             Vector3 newPosition = closestCell.position;
-            newPosition.x += 0.01f; // Set the exact X position to the desired value
-            newPosition.y += 0f; // Adjust the Y position to ensure the Quad is on top
+            newPosition.x += 0.510f; // Adjust the X position to ensure the Quad is on top
+            newPosition.y -= 0.01f; // Set the Y position to the desired value
+            newPosition.z -= 0f; // Adjust the Z position to bring the Quad in front of the grid cell
             obj.transform.position = newPosition;
+            obj.GetComponent<QuadController>().AssignedCellIndex = closestCellIndex; // Assign the grid cell index to the quad
             Debug.Log("Snapped " + obj.name + " to " + closestCell.name);
         }
     }
 
     private void CheckIfSorted()
     {
-        // Check if all objects are in their sorted positions
+        // Check if all Quads are in their sorted positions
         bool allSorted = true;
 
-        for (int i = 0; i < objectsToSort.Length; i++)
+        for (int i = 0; i < quadsToSort.Length; i++)
         {
-            Vector3 objectPosition = objectsToSort[i].transform.position;
-            Vector3 gridCellPosition = gridCells[i].position;
-
-            // Set the exact expected X and Y position
-            gridCellPosition.x += 0.01f;
-            gridCellPosition.y += 1.2f;
-
-            if (Vector3.Distance(objectPosition, gridCellPosition) > 0.01f)
+            QuadController quadController = quadsToSort[i].GetComponent<QuadController>();
+            if (quadController.AssignedCellIndex != i)
             {
                 allSorted = false;
-                Debug.Log("Object " + objectsToSort[i].name + " is not in the correct position.");
-                break; // If one object is out of place, no need to check further
+                Debug.Log("Quad " + quadsToSort[i].name + " is not in the correct position.");
+                break; // If one Quad is out of place, no need to check further
             }
         }
 
         if (allSorted)
         {
-            Debug.Log("Puzzle Complete! All objects are sorted.");
+            Debug.Log("Puzzle Complete! All Quads are sorted.");
         }
     }
 }
