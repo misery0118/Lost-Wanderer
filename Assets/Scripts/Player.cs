@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioSource pickUpSource;
 
+     private int originalLayer; // To store the original layer of the picked-up object
+
     private void Start()
     {
         interactionInput.action.performed += PickUp;
@@ -78,13 +80,16 @@ public class Player : MonoBehaviour
     {
         if (inHandItem != null)
         {
+            // Reset layer to original
+            inHandItem.layer = originalLayer;
+            
             inHandItem.transform.SetParent(null);
-            inHandItem = null;
-            Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
+            Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.isKinematic = false;
             }
+            inHandItem = null;
         }
     }
 
@@ -98,6 +103,8 @@ public class Player : MonoBehaviour
                 pickUpSource.Play();
                 inHandItem = pickableItem.PickUp();
                 inHandItem.transform.SetParent(pickUpParent.transform, pickableItem.KeepWorldPosition);
+                originalLayer = inHandItem.layer; // Store the original layer
+                inHandItem.layer = LayerMask.NameToLayer("PickedUpObject");
             }
 
             Debug.Log(hit.collider.name);
@@ -106,13 +113,15 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("It's food!");
                 inHandItem = hit.collider.gameObject;
-                inHandItem.transform.position = Vector3.zero;
+                inHandItem.transform.position = pickUpParent.position;
                 inHandItem.transform.rotation = Quaternion.identity;
                 inHandItem.transform.SetParent(pickUpParent.transform, false);
                 if (rb != null)
                 {
                     rb.isKinematic = true;
                 }
+                originalLayer = inHandItem.layer;
+                inHandItem.layer = LayerMask.NameToLayer("PickedUpObject");
                 return;
             }
             if (hit.collider.GetComponent<Item>())
@@ -124,6 +133,8 @@ public class Player : MonoBehaviour
                 {
                     rb.isKinematic = true;
                 }
+                originalLayer = inHandItem.layer;
+                inHandItem.layer = LayerMask.NameToLayer("PickedUpObject");
                 return;
             }
         }

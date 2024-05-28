@@ -33,7 +33,12 @@ public class SphereColorChanger : MonoBehaviour
             isLocked = true;
             rb.isKinematic = true; // Disable physics on the sphere
             col.enabled = false; // Disable the collider to prevent further interactions
-            lockedPosition = position; // Store the position to lock to
+
+            // Calculate the new locked position with an offset to sit on top of the cube
+            float sphereRadius = GetComponent<SphereCollider>().radius * transform.localScale.y;
+            float cubeHeight = 0.1f; // Adjust based on the actual height of the cube model
+            lockedPosition = position + new Vector3(0, sphereRadius + cubeHeight, 0);
+
             StartCoroutine(MoveToPosition(lockedPosition)); // Move smoothly to the locked position
         }
     }
