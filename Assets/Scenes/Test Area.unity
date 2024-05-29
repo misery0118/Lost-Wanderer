@@ -8692,7 +8692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.233
+      value: 6.353
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8700,7 +8700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.784
+      value: 6.488
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15822,14 +15822,14 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d2390b0529d865244992e9e1bfae952d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2f7a4bb4a0d6e0c4e8f0b730751ada8e, type: 2}
+      objectReference: {fileID: 2100000, guid: 98306f9e7321830428fed36380dfda4b, type: 2}
     - target: {fileID: -7511558181221131132, guid: d2390b0529d865244992e9e1bfae952d, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 6945407b06c93164d95b8aa041816011, type: 2}
     - target: {fileID: 919132149155446097, guid: d2390b0529d865244992e9e1bfae952d, type: 3}
       propertyPath: m_Name
-      value: Plate (6)
+      value: Plate (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25727,7 +25727,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0649a9040f3a66940abd52728131476a, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2f7a4bb4a0d6e0c4e8f0b730751ada8e, type: 2}
+      objectReference: {fileID: 2100000, guid: 98306f9e7321830428fed36380dfda4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 0649a9040f3a66940abd52728131476a, type: 3}
       propertyPath: m_Name
       value: Plate (1)
@@ -34047,7 +34047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.07
+      value: 7.512
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -34055,7 +34055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.94
+      value: 4.162
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c738316f73137f43ab6c2f375ee29f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -35230,7 +35230,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1e60fcdf4ed9ddb4c9c171d0e95e50ef, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2f7a4bb4a0d6e0c4e8f0b730751ada8e, type: 2}
+      objectReference: {fileID: 2100000, guid: 6945407b06c93164d95b8aa041816011, type: 2}
     - target: {fileID: 919132149155446097, guid: 1e60fcdf4ed9ddb4c9c171d0e95e50ef, type: 3}
       propertyPath: m_Name
       value: Plate Holder
