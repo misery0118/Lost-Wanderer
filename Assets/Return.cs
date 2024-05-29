@@ -3,11 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class ReturnToMainMenu : MonoBehaviour
 {
+    public StarterAssets.StarterAssetsInputs starterAssetsInputs;
+
     void Update()
     {
-        // Check if the ESC key is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene(0);
         }
     }
