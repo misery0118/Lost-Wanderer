@@ -9,6 +9,11 @@ public class Grabber : MonoBehaviour
     public GameObject[] quadsToSort; // Quads to sort
     public Transform[] gridCells; // Grid cells to snap the Quads to
 
+    [SerializeField]
+    private float dragHeight = 1.0f; // New field to set the height at which quads are dragged
+
+    private Dictionary<int, GameObject> occupiedGridCells = new Dictionary<int, GameObject>(); // Keeps track of occupied grid cells
+
     private void Start()
     {
         // Ensure that quadsToSort are set properly
@@ -35,6 +40,16 @@ public class Grabber : MonoBehaviour
                     initialPosition = selectedObject.transform.position;
                     Cursor.visible = false;
                     Debug.Log("Selected object: " + selectedObject.name);
+
+                    // Unmark the previous cell if applicable
+                    if (selectedObject.TryGetComponent<QuadController>(out QuadController quadController))
+                    {
+                        int previousCellIndex = quadController.AssignedCellIndex;
+                        if (occupiedGridCells.ContainsKey(previousCellIndex) && occupiedGridCells[previousCellIndex] == selectedObject)
+                        {
+                            occupiedGridCells.Remove(previousCellIndex);
+                        }
+                    }
                 }
             }
             else
@@ -57,15 +72,8 @@ public class Grabber : MonoBehaviour
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
 
-            // Keep the y position consistent for Quads
-            if (selectedObject.CompareTag("drag"))
-            {
-                selectedObject.transform.position = new Vector3(worldPosition.x, 0.8f, worldPosition.z);
-            }
-            else
-            {
-                selectedObject.transform.position = new Vector3(worldPosition.x, initialPosition.y, worldPosition.z);
-            }
+            // Use the dragHeight to set the y position
+            selectedObject.transform.position = new Vector3(worldPosition.x, dragHeight, worldPosition.z);
 
             if (Input.GetMouseButtonDown(1))
             {
@@ -105,7 +113,7 @@ public class Grabber : MonoBehaviour
         for (int i = 0; i < gridCells.Length; i++)
         {
             float distance = Vector3.Distance(obj.transform.position, gridCells[i].position);
-            if (distance < minDistance)
+            if (distance < minDistance && !occupiedGridCells.ContainsKey(i))
             {
                 minDistance = distance;
                 closestCell = gridCells[i];
@@ -117,12 +125,17 @@ public class Grabber : MonoBehaviour
         if (closestCell != null)
         {
             Vector3 newPosition = closestCell.position;
-            newPosition.x += 0.510f; // Adjust the X position to ensure the Quad is on top
+            newPosition.x += 0.01f; // Adjust the X position to ensure the Quad is on top
             newPosition.y -= 0.01f; // Set the Y position to the desired value
             newPosition.z -= 0f; // Adjust the Z position to bring the Quad in front of the grid cell
             obj.transform.position = newPosition;
-            obj.GetComponent<QuadController>().AssignedCellIndex = closestCellIndex; // Assign the grid cell index to the quad
-            Debug.Log("Snapped " + obj.name + " to " + closestCell.name);
+
+            if (obj.TryGetComponent<QuadController>(out QuadController quadController))
+            {
+                quadController.AssignedCellIndex = closestCellIndex; // Assign the grid cell index to the quad
+                occupiedGridCells[closestCellIndex] = obj; // Mark the cell as occupied
+                Debug.Log("Snapped " + obj.name + " to " + closestCell.name);
+            }
         }
     }
 
