@@ -20,22 +20,31 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
+		private bool isAltToggled = false; // Variable to keep track of the toggle state
+
+    void Update()
+    {
+        if (Keyboard.current.altKey.wasPressedThisFrame)
+        {
+            isAltToggled = !isAltToggled; // Toggle the state
+        }
+    }
+	
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
+
     public void OnLook(InputValue value)
     {
-        bool isAltPressed = Keyboard.current.altKey.isPressed;
-
         if (cursorInputForLook)
         {
-            if (isAltPressed)
+            if (isAltToggled)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-                LookInput(new Vector2(0, 0));
+                LookInput(Vector2.zero);
             }
             else
             {
