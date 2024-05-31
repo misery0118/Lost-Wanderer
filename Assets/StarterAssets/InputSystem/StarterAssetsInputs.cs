@@ -20,19 +20,46 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-#if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
-		{
-			MoveInput(value.Get<Vector2>());
-		}
+		private bool isAltToggled = false; // Variable to keep track of the toggle state
 
-		public void OnLook(InputValue value)
-		{
-			if(cursorInputForLook)
-			{
-				LookInput(value.Get<Vector2>());
-			}
-		}
+void Update()
+{
+    if (Keyboard.current.altKey.wasPressedThisFrame)
+    {
+        isAltToggled = !isAltToggled; // Toggle the state
+    }
+	if (!PauseMenu.GameIsPaused) // Check if the game is not paused
+    {
+
+    }
+}
+
+#if ENABLE_INPUT_SYSTEM
+public void OnMove(InputValue value)
+{
+        MoveInput(value.Get<Vector2>());
+}
+
+public void OnLook(InputValue value)
+{
+    if (cursorInputForLook && !PauseMenu.GameIsPaused) // Check if the game is not paused
+    {
+        if (isAltToggled)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            LookInput(Vector2.zero);
+        }
+        else
+        {	
+			if (!PauseMenu.GameIsPaused) {
+				Cursor.lockState = CursorLockMode.Locked;
+            	Cursor.visible = false;
+            	LookInput(value.Get<Vector2>());
+			}  
+        }
+    }
+}
 
 		public void OnJump(InputValue value)
 		{
