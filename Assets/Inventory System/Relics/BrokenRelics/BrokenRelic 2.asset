@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9269b821af389431ea5638b7433bdbf1, type: 3}
+  m_Name: BrokenRelic 2
+  m_EditorClassIdentifier: 
+  id: 3
+  brokenrelicName: Broken Relic 3
+  value: 10
+  icon: {fileID: 980668460, guid: bf0565110bacb4f2a8f3f929c136d0ac, type: 3}
