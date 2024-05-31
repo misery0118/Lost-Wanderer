@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioSource pickUpSource;
 
-     private int originalLayer; // To store the original layer of the picked-up object
+    private int originalLayer; // To store the original layer of the picked-up object
 
     private void Start()
     {
@@ -54,6 +54,9 @@ public class Player : MonoBehaviour
 
     private void Rotation(InputAction.CallbackContext obj)
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
         if (hit.collider != null && hit.collider.GetComponent<Pointer>())
         {
             Vector2 rotationInput = obj.ReadValue<Vector2>();
@@ -66,6 +69,9 @@ public class Player : MonoBehaviour
 
     private void Use(InputAction.CallbackContext obj)
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
         if (inHandItem != null)
         {
             IUsable usable = inHandItem.GetComponent<IUsable>();
@@ -78,11 +84,14 @@ public class Player : MonoBehaviour
 
     private void Drop(InputAction.CallbackContext obj)
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
         if (inHandItem != null)
         {
             // Reset layer to original
             inHandItem.layer = originalLayer;
-            
+
             inHandItem.transform.SetParent(null);
             Rigidbody rb = inHandItem.GetComponent<Rigidbody>();
             if (rb != null)
@@ -95,6 +104,9 @@ public class Player : MonoBehaviour
 
     private void PickUp(InputAction.CallbackContext obj)
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
         if (hit.collider != null && inHandItem == null)
         {
             IPickable pickableItem = hit.collider.GetComponent<IPickable>();
@@ -111,7 +123,7 @@ public class Player : MonoBehaviour
             Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
             if (hit.collider.GetComponent<Food>() || hit.collider.GetComponent<Weapon>())
             {
-                Debug.Log("It's food!");
+                Debug.Log("It's food or a weapon!");
                 inHandItem = hit.collider.gameObject;
                 inHandItem.transform.position = pickUpParent.position;
                 inHandItem.transform.rotation = Quaternion.identity;
@@ -142,6 +154,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
         Debug.DrawRay(playerCameraTransform.position, playerCameraTransform.forward * hitRange, Color.red);
         if (hit.collider != null)
         {

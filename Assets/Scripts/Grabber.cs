@@ -22,65 +22,69 @@ public class Grabber : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        // Check if the game is paused before allowing object interaction
+        if (!PauseMenu.GameIsPaused)
         {
-            if (selectedObject == null)
+            if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit = CastRay();
-
-                if (hit.collider != null)
+                if (selectedObject == null)
                 {
-                    if (!hit.collider.CompareTag("drag"))
-                    {
-                        Debug.Log("Hit object is not draggable");
-                        return;
-                    }
+                    RaycastHit hit = CastRay();
 
-                    selectedObject = hit.collider.gameObject;
-                    initialPosition = selectedObject.transform.position;
-                    Cursor.visible = false;
-                    Debug.Log("Selected object: " + selectedObject.name);
-
-                    // Unmark the previous cell if applicable
-                    if (selectedObject.TryGetComponent<QuadController>(out QuadController quadController))
+                    if (hit.collider != null)
                     {
-                        int previousCellIndex = quadController.AssignedCellIndex;
-                        if (occupiedGridCells.ContainsKey(previousCellIndex) && occupiedGridCells[previousCellIndex] == selectedObject)
+                        if (!hit.collider.CompareTag("drag"))
                         {
-                            occupiedGridCells.Remove(previousCellIndex);
+                            Debug.Log("Hit object is not draggable");
+                            return;
+                        }
+
+                        selectedObject = hit.collider.gameObject;
+                        initialPosition = selectedObject.transform.position;
+                        Cursor.visible = false;
+                        Debug.Log("Selected object: " + selectedObject.name);
+
+                        // Unmark the previous cell if applicable
+                        if (selectedObject.TryGetComponent<QuadController>(out QuadController quadController))
+                        {
+                            int previousCellIndex = quadController.AssignedCellIndex;
+                            if (occupiedGridCells.ContainsKey(previousCellIndex) && occupiedGridCells[previousCellIndex] == selectedObject)
+                            {
+                                occupiedGridCells.Remove(previousCellIndex);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                // Drop the selected object
-                if (selectedObject.CompareTag("drag"))
+                else
                 {
-                    SnapToGrid(selectedObject);
+                    // Drop the selected object
+                    if (selectedObject.CompareTag("drag"))
+                    {
+                        SnapToGrid(selectedObject);
+                    }
+                    selectedObject = null;
+                    Cursor.visible = true;
+
+                    // Check if objects are sorted
+                    CheckIfSorted();
                 }
-                selectedObject = null;
-                Cursor.visible = true;
-
-                // Check if objects are sorted
-                CheckIfSorted();
             }
-        }
 
-        if (selectedObject != null)
-        {
-            Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-
-            // Use the dragHeight to set the y position
-            selectedObject.transform.position = new Vector3(worldPosition.x, dragHeight, worldPosition.z);
-
-            if (Input.GetMouseButtonDown(1))
+            if (selectedObject != null)
             {
-                selectedObject.transform.rotation = Quaternion.Euler(new Vector3(
-                    selectedObject.transform.rotation.eulerAngles.x,
-                    selectedObject.transform.rotation.eulerAngles.y + 90f,
-                    selectedObject.transform.rotation.eulerAngles.z));
+                Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
+
+                // Use the dragHeight to set the y position
+                selectedObject.transform.position = new Vector3(worldPosition.x, dragHeight, worldPosition.z);
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    selectedObject.transform.rotation = Quaternion.Euler(new Vector3(
+                        selectedObject.transform.rotation.eulerAngles.x,
+                        selectedObject.transform.rotation.eulerAngles.y + 90f,
+                        selectedObject.transform.rotation.eulerAngles.z));
+                }
             }
         }
     }

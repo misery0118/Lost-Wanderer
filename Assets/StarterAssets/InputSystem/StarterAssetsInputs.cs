@@ -22,38 +22,45 @@ namespace StarterAssets
 
 		private bool isAltToggled = false; // Variable to keep track of the toggle state
 
-    void Update()
+void Update()
+{
+    if (Keyboard.current.altKey.wasPressedThisFrame)
     {
-        if (Keyboard.current.altKey.wasPressedThisFrame)
-        {
-            isAltToggled = !isAltToggled; // Toggle the state
-        }
+        isAltToggled = !isAltToggled; // Toggle the state
     }
-	
-#if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
-		{
-			MoveInput(value.Get<Vector2>());
-		}
+	if (!PauseMenu.GameIsPaused) // Check if the game is not paused
+    {
 
-    public void OnLook(InputValue value)
+    }
+}
+
+#if ENABLE_INPUT_SYSTEM
+public void OnMove(InputValue value)
+{
+        MoveInput(value.Get<Vector2>());
+}
+
+public void OnLook(InputValue value)
+{
+    if (cursorInputForLook && !PauseMenu.GameIsPaused) // Check if the game is not paused
     {
-        if (cursorInputForLook)
+        if (isAltToggled)
         {
-            if (isAltToggled)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                LookInput(Vector2.zero);
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                LookInput(value.Get<Vector2>());
-            }
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            LookInput(Vector2.zero);
+        }
+        else
+        {	
+			if (!PauseMenu.GameIsPaused) {
+				Cursor.lockState = CursorLockMode.Locked;
+            	Cursor.visible = false;
+            	LookInput(value.Get<Vector2>());
+			}  
         }
     }
+}
+
 		public void OnJump(InputValue value)
 		{
 			JumpInput(value.isPressed);

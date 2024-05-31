@@ -12,6 +12,15 @@ public class ItemPickup : MonoBehaviour
     }
 
     private void OnMouseDown() {
-        Pickup();
+        Debug.Log("OnMouseDown called");
+        if (!PauseMenu.GameIsPaused)
+        {
+            Debug.Log("Game is not paused, picking up item");
+            Pickup();
+        }
+        else
+        {
+            Debug.Log("Game is paused, cannot pick up item");
+        }
     }
 }
