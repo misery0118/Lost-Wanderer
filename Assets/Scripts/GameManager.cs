@@ -13,12 +13,15 @@ public class GameManager : MonoBehaviour
     private List<CubeColorChanger> correctCubes = new List<CubeColorChanger>(); // Track correctly triggered cubes
     private List<SphereColorChanger> correctSpheres = new List<SphereColorChanger>(); // Track correctly triggered spheres
 
+    private Door doorScript;
+
     void Awake()
     {
         // Ensure there's only one instance of the GameManager
         if (Instance == null)
         {
             Instance = this;
+            doorScript = door.GetComponent<Door>(); // Get the Door component
         }
         else
         {
@@ -69,8 +72,17 @@ public class GameManager : MonoBehaviour
 
     private void UnlockDoor()
     {
-        // Implement the logic to unlock the door or open the pathway
-        door.SetActive(false); // Example: deactivate the door object
+        // Open the door with animation
+        if (doorScript != null)
+        {
+            // Assume the player's position is the parameter for opening the door
+            Vector3 userPosition = transform.position; // or any suitable position
+            doorScript.Open(userPosition);
+        }
+        else
+        {
+            Debug.LogError("Door script not found on the door object");
+        }
     }
 
     private void ResetSequence()

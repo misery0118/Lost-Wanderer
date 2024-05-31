@@ -24505,6 +24505,7 @@ GameObject:
   - component: {fileID: 1200693517}
   - component: {fileID: 1200693516}
   - component: {fileID: 1200693515}
+  - component: {fileID: 1200693519}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -24600,6 +24601,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1237167662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1200693519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200693514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3518d9d2393d66d46885800a65f8d3bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOpen: 0
+  IsRotatingDoor: 0
+  Speed: 1.5
+  RotationAmount: 90
+  ForwardDirection: 0
+  SlideDirection: {x: 0, y: 0, z: 2.28}
+  SlideAmount: 2
 --- !u!1001 &1217775143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30855,7 +30875,11 @@ MonoBehaviour:
   - {fileID: 568350491}
   - {fileID: 1280091040}
   - {fileID: 1494638343}
-  dragHeight: 2.2
+  dragHeight: 2
+  maxRaycastDistance: 100
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &1585874734
 PrefabInstance:
   m_ObjectHideFlags: 0

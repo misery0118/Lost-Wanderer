@@ -12,6 +12,12 @@ public class Grabber : MonoBehaviour
     [SerializeField]
     private float dragHeight = 1.0f; // New field to set the height at which quads are dragged
 
+    [SerializeField]
+    private float maxRaycastDistance = 100f; // Maximum distance for the raycast
+
+    [SerializeField]
+    private LayerMask layerMask; // LayerMask to filter the raycast
+
     private Dictionary<int, GameObject> occupiedGridCells = new Dictionary<int, GameObject>(); // Keeps track of occupied grid cells
 
     private void Start()
@@ -91,18 +97,16 @@ public class Grabber : MonoBehaviour
 
     private RaycastHit CastRay()
     {
-        Vector3 screenMousePosFar = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.farClipPlane);
-        Vector3 screenMousePosNear = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.nearClipPlane);
-        Vector3 worldMousePosFar = Camera.main.ScreenToWorldPoint(screenMousePosFar);
-        Vector3 worldMousePosNear = Camera.main.ScreenToWorldPoint(screenMousePosNear);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        Physics.Raycast(worldMousePosNear, worldMousePosFar - worldMousePosNear, out hit);
+        if (Physics.Raycast(ray, out hit, maxRaycastDistance, layerMask))
+        {
+            Debug.Log("Hit: " + hit.collider.name);
+        }
+        else
+        {
+            Debug.Log("No hit detected within max distance or layermask.");
+        }
 
         return hit;
     }
