@@ -70,3 +70,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/SunboxGames/ModularDungeonCaves/Textures/SandMineRock/sand_mine_rock_rubble_Height.png
+Assets/SunboxGames/ModularDungeonCaves/Textures/Plugs_01/Plugs_01_paint_Plugs_01_Normal.png.meta
