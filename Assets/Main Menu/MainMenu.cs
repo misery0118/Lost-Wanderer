@@ -7,7 +7,6 @@ namespace MenuSystem
 {
     public class MainMenu : MonoBehaviour
     {
-
         public ButtonManager buttonManager;
         public GameObject titleScreen;
         public GameObject mainMenu;
@@ -25,12 +24,17 @@ namespace MenuSystem
 
         public bool storyExpandActive = false;
         public bool quitExpandActive = false;
+
         void Start()
         {
             titleScreenCanvasGroup.alpha = 1f;
             mainMenuCanvasGroup.alpha = 0f;
             storyExpandCanvasGroup.alpha = 0f;
             quitExpandCanvasGroup.alpha = 0f;
+
+            // Ensure cursor is visible and unlocked at the start
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         void Update()
@@ -44,9 +48,8 @@ namespace MenuSystem
             {
                 if (storyExpandActive)
                     StartCoroutine(FadeOutStoryExpand());
-                else if (buttonManager.IsQuitExpandActive()) // Check if quitExpand is active
-                storyExpandActive = false;
-                quitExpandActive = false; // Reset quitExpand active status
+                else if (quitExpandActive) // Check if quitExpand is active
+                    StartCoroutine(FadeOutQuitExpand());
             }
             else if (!titleScreenActive && Input.GetKeyDown(KeyCode.Backspace))
             {
@@ -54,7 +57,6 @@ namespace MenuSystem
                 titleScreenActive = true;
             }
         }
-
 
         IEnumerator FadeOutTitleScreen()
         {
@@ -69,6 +71,10 @@ namespace MenuSystem
             mainMenu.SetActive(true);
             startSound.Play();
             StartCoroutine(FadeInMainMenu());
+
+            // Ensure cursor is visible and unlocked
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         IEnumerator FadeInMainMenu()
@@ -98,6 +104,10 @@ namespace MenuSystem
             buttonManager.Unselect();
             backSound.Play();
             StartCoroutine(FadeInTitleScreen());
+
+            // Ensure cursor is visible and unlocked
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         IEnumerator FadeInTitleScreen()

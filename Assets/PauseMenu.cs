@@ -11,6 +11,13 @@ public class PauseMenu : MonoBehaviour
 
     public StarterAssets.StarterAssetsInputs starterAssetsInputs;
 
+    private SceneLoader sceneLoader;
+
+    void Start()
+    {
+        sceneLoader = FindObjectOfType<SceneLoader>();
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -52,10 +59,9 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Game Paused");
     }
 
-    public void LoadMenu()
+    public void ReturnToMainMenu()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("title");
+        Resume();
     }
 
     public void QuitGame()
