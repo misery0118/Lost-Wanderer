@@ -12,6 +12,8 @@ TagManager:
   - Cube
   - GridCell
   - drag
+  - LedgeLimit
+  - Ladder
   layers:
   - Default
   - TransparentFX

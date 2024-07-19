@@ -25,18 +25,26 @@ namespace DiasGames.Controller
         public float TopClamp = 70.0f;
         [Tooltip("How far in degrees can you move the camera down")]
         public float BottomClamp = -30.0f;
-        [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
+        [Tooltip("Additional degrees to override the camera. Useful for fine-tuning camera position when locked")]
         public float CameraAngleOverride = 0.0f;
         [Tooltip("Speed of camera turn")]
         public Vector2 CameraTurnSpeed = new Vector2(300.0f, 200.0f);
-        [Tooltip("For locking the camera position on all axis")]
+        [Tooltip("For locking the camera position on all axes")]
         public bool LockCameraPosition = false;
+        [Tooltip("Camera sensitivity multiplier")]
+        [Range(0.1f, 60.0f)] public float CameraSensitivity = 1.0f;
+
+        [Header("Invert Controls")]
+        [Tooltip("Invert the vertical camera movement")]
+        public bool InvertY = false;
+        [Tooltip("Invert the horizontal camera movement")]
+        public bool InvertX = false;
 
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
 
-        // for shooter ui
+        // for shooter UI
         public float CurrentRecoil { get; private set; } = 0f;
         private float recoilReturnVel = 0;
 
@@ -57,7 +65,6 @@ namespace DiasGames.Controller
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
-
 
             // set right angle on start for camera
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.eulerAngles.y;
@@ -123,11 +130,14 @@ namespace DiasGames.Controller
             // if there is an input and camera position is not fixed
             if (Look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
-                _cinemachineTargetYaw += Look.x * CameraTurnSpeed.x * Time.deltaTime;
-                _cinemachineTargetPitch += Look.y * CameraTurnSpeed.y * Time.deltaTime;
+                float lookX = InvertX ? -Look.x : Look.x;
+                float lookY = InvertY ? -Look.y : Look.y;
+
+                _cinemachineTargetYaw += lookX * CameraTurnSpeed.x * Time.deltaTime * CameraSensitivity;
+                _cinemachineTargetPitch += lookY * CameraTurnSpeed.y * Time.deltaTime * CameraSensitivity;
             }
 
-            // clamp our rotations so our values are limited 360 degrees
+            // clamp our rotations so our values are limited to 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
@@ -255,7 +265,6 @@ namespace DiasGames.Controller
             OnMove(value.Get<Vector2>());
         }
 
-
         private void OnLook(InputValue value)
         {
             OnLook(value.Get<Vector2>());
@@ -280,7 +289,6 @@ namespace DiasGames.Controller
         {
             OnCrouch(value.isPressed);
         }
-
 
         private void OnCrawl(InputValue value)
         {
