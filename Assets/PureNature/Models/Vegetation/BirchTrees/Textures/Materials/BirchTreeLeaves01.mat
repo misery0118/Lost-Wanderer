@@ -2,21 +2,33 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BirchTreeLeaves01
-  m_Shader: {fileID: 4800000, guid: 0f96a2937f6bace459a5fdaac39c0fb3, type: 3}
-  m_ShaderKeywords: _BASEWINDCHANNEL_B _BASEWIND_B _DEPOSITLAYERCHANNEL_G _HIDEHARDANGLES_ON
-    _HIDESIDES_ON _INVERTGRADIENT_ON _MICROWINDCHANNEL_R _MICROWIND_R _USEDITHER_ON
+  m_Shader: {fileID: 4800000, guid: 6e20bd99d5b4df6cc986837224e0fab4, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BASEWINDCHANNEL_B
+  - _HIDESIDES_ON
+  - _INVERTGRADIENT_ON
+  - _MICROWINDCHANNEL_R
+  m_InvalidKeywords:
+  - _BASEWIND_B
+  - _DEPOSITLAYERCHANNEL_G
+  - _HIDEHARDANGLES_ON
+  - _MICROWIND_R
+  - _USEDITHER_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -100,6 +112,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
     - _BaseWind: 2
@@ -207,3 +220,5 @@ Material:
     - _TreeOffset1: {r: 0, g: 5, b: 0, a: 0}
     - _Vector0: {r: 1, g: 1, b: 0, a: 0}
     - _windOrientation: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
