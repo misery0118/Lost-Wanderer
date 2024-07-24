@@ -16,7 +16,11 @@ namespace DiasGames
         public AbstractCombat CurrentCombat { get; private set; }
 
         public CharacterActions characterActions = new CharacterActions();
-        
+
+        // Reference to the CS Camera Controller game object
+        public GameObject csCameraController;
+        private MonoBehaviour climbIK;
+
         // Observers
         public event Action OnUpdatedAbilities = null;
         public event Action<AbstractAbility> OnAbilityStopped = null;
@@ -30,9 +34,19 @@ namespace DiasGames
 
             foreach (AbstractAbility ability in CharAbilities)
                 ability.SetActionReference(ref characterActions);
-            
+
             foreach (AbstractCombat combat in CharCombats)
                 combat.SetActionReference(ref characterActions);
+
+            // Get the ClimbIK component from the CS Camera Controller
+            if (csCameraController != null)
+            {
+                climbIK = csCameraController.GetComponent("ClimbIK") as MonoBehaviour;
+                if (climbIK == null)
+                {
+                    Debug.LogError("ClimbIK component not found on CS Camera Controller");
+                }
+            }
         }
 
         // stop scheduler
@@ -58,7 +72,7 @@ namespace DiasGames
         }
 
         /// <summary>
-        /// Loop through all frames to check wheter some ability wants to enter
+        /// Loop through all frames to check whether some ability wants to enter
         /// </summary>
         private void CheckAbilitiesStates()
         {
@@ -88,7 +102,7 @@ namespace DiasGames
                 // Stops the current ability
                 if (CurrentAbility != null)
                     CurrentAbility.StopAbility();
-                
+
                 // Starts the new Ability
                 nextAbility.StartAbility();
 
@@ -97,8 +111,18 @@ namespace DiasGames
                 CurrentAbility.abilityStopped += AbilityHasStopped;
                 OnAbilityStarted?.Invoke(CurrentAbility);
 
-                if(CurrentCombat != null)
+                if (CurrentCombat != null)
                     CurrentCombat.SetCurrentAbility(CurrentAbility);
+
+                // Enable or disable ClimbIK based on the current ability
+                if (CurrentAbility is PushAbility)
+                {
+                    if (climbIK != null) climbIK.enabled = false;
+                }
+                else
+                {
+                    if (climbIK != null) climbIK.enabled = true;
+                }
             }
         }
 
@@ -112,6 +136,12 @@ namespace DiasGames
 
             // call observer
             OnAbilityStopped?.Invoke(LastAbility);
+
+            // Enable or disable ClimbIK based on the last ability
+            if (LastAbility is PushAbility)
+            {
+                if (climbIK != null) climbIK.enabled = true;
+            }
         }
 
         // update state to check if any combat wants to play
@@ -123,7 +153,7 @@ namespace DiasGames
                 return;
             }
 
-            foreach(AbstractCombat combat in CharCombats)
+            foreach (AbstractCombat combat in CharCombats)
             {
                 if (combat.CombatReadyToRun())
                 {
