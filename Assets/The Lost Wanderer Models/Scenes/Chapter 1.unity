@@ -9409,6 +9409,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4491158196177669338, guid: fa1b35783beafad49a17127a4f749534, type: 3}
   m_PrefabInstance: {fileID: 352432746}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &353359857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1233629266}
+    m_Modifications:
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 29.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.870102
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -132.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000037748947
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396357148420420345, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_Name
+      value: Oak Falling leaves (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a87366018f2a904a380a09d486d25526, type: 3}
+--- !u!4 &353359858 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+  m_PrefabInstance: {fileID: 353359857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &355370799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30526,6 +30588,8 @@ Transform:
   - {fileID: 168642543}
   - {fileID: 454422007}
   - {fileID: 402461631}
+  - {fileID: 1241621498}
+  - {fileID: 353359858}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1236716184
@@ -30852,6 +30916,68 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1804386387}
   m_SourcePrefab: {fileID: 100100000, guid: 5387b38ed7122c61ba2022ccac2d512b, type: 3}
+--- !u!1001 &1241621497
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1233629266}
+    m_Modifications:
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.137695
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.870102
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -96.430786
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000037748947
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396357148420420345, guid: a87366018f2a904a380a09d486d25526, type: 3}
+      propertyPath: m_Name
+      value: Oak Falling leaves
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a87366018f2a904a380a09d486d25526, type: 3}
+--- !u!4 &1241621498 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3911709583078942787, guid: a87366018f2a904a380a09d486d25526, type: 3}
+  m_PrefabInstance: {fileID: 1241621497}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1242791970
 PrefabInstance:
   m_ObjectHideFlags: 0
