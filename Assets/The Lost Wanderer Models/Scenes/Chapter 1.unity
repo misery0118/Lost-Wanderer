@@ -57480,6 +57480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PineTree04
       objectReference: {fileID: 0}
+    - target: {fileID: 6716620933191732594, guid: f7daf431ca59c443a8ad5361841a84ca, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6790539378439967252, guid: f7daf431ca59c443a8ad5361841a84ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: -41.160828
