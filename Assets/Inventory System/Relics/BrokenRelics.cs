@@ -7,5 +7,7 @@ public class BrokenRelics : ScriptableObject {
     public string brokenrelicName;
     public int value;
     public Sprite icon;
+
+    //Temporary Code
+    public string iconPath;
 }
- 

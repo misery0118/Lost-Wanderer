@@ -10380,7 +10380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemData: {fileID: 11400000, guid: 78c4c914331474115b1b7603e2af59b6, type: 2}
---- !u!114 &605695468
+--- !u!114 &605695474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21274,6 +21274,82 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5056800285638912922, guid: f23b6348e75d74fa39a899df8a6d288c, type: 3}
   m_PrefabInstance: {fileID: 945607450}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &953565329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 953565331}
+  - component: {fileID: 953565332}
+  - component: {fileID: 953565333}
+  - component: {fileID: 953565334}
+  m_Layer: 0
+  m_Name: ItemChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &953565331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953565329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.185, y: 0.03602209, z: 1.9908104}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953565332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953565329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49878b80a762dfe488c7d37a689ae216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itm: {fileID: 11400000, guid: 78c4c914331474115b1b7603e2af59b6, type: 2}
+  itemObj: {fileID: 605695465}
+--- !u!114 &953565333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953565329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a047fd916fa4af84180281c78d420c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relics: {fileID: 11400000, guid: a6fe4484c39504ed0807bb1a0ad0d90d, type: 2}
+  itemObj: {fileID: 1097451652052248515}
+--- !u!114 &953565334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953565329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3a093798f8e56449c3f7aafe24695a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenrelics: {fileID: 11400000, guid: b1804af57ee0145338b4b57c1d6e428b, type: 2}
+  itemObj: {fileID: 356069214}
 --- !u!1001 &953587877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44525,16 +44601,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flashlight
       objectReference: {fileID: 0}
+    - target: {fileID: 2388007782693401446, guid: bd2489fc4694346fc8b04a592ed9b972, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2388007782693401446, guid: bd2489fc4694346fc8b04a592ed9b972, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 605695468}
+      addedObject: {fileID: 605695467}
     - targetCorrespondingSourceObject: {fileID: 2388007782693401446, guid: bd2489fc4694346fc8b04a592ed9b972, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 605695467}
+      addedObject: {fileID: 605695474}
   m_SourcePrefab: {fileID: 100100000, guid: bd2489fc4694346fc8b04a592ed9b972, type: 3}
 --- !u!1 &3877542988640532908
 GameObject:
@@ -46682,3 +46762,4 @@ SceneRoots:
   - {fileID: 882906524}
   - {fileID: 1387830258}
   - {fileID: 1658753542}
+  - {fileID: 953565331}

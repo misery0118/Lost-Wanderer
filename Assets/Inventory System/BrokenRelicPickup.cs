@@ -6,7 +6,8 @@ public class BrokenRelicPickup : MonoBehaviour
 {
     public BrokenRelics BrokenRelicData;
 
-    void Pickup() {
+    void Pickup()
+    {
         InventoryManager.Instance.AddBrokenRelics(BrokenRelicData);
         Destroy(gameObject);
     }

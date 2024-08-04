@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SaveLocation : MonoBehaviour
 {
-
     public string saveKey; // Unique identifier for each save spot
     public float x, y, z;
 
@@ -24,6 +23,9 @@ public class SaveLocation : MonoBehaviour
         PlayerPrefs.SetFloat(saveKey + "_x", x);
         PlayerPrefs.SetFloat(saveKey + "_y", y);
         PlayerPrefs.SetFloat(saveKey + "_z", z);
+
+        InventoryManager.Instance.SaveInventory();
+        
         PlayerPrefs.Save();
 
         Debug.Log("Saved location " + saveKey + ": Position: " + x + ", " + y + ", " + z);

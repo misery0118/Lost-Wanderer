@@ -7,4 +7,7 @@ public class Relics : ScriptableObject {
     public string relicName;
     public int value;
     public Sprite icon;
+
+    //Temporary Code
+    public string iconPath;
 }
