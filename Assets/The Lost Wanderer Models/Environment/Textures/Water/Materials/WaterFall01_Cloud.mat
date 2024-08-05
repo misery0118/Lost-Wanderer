@@ -21,21 +21,20 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WaterFall01_Cloud
-  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+  m_Shader: {fileID: 4800000, guid: a923cdf2840b4915a9bfa2facbdeb869, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _ALPHATEST_ON
   - _COLOROVERLAY_ON
   - _EMISSION
-  m_InvalidKeywords:
   - _FLIPBOOKBLENDING_OFF
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - ALWAYS
   m_LockedProperties: 
@@ -66,11 +65,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FoamMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 2fd70f30601c1474399dd0df9cfc1849, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -85,6 +96,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 1
+    - _AlphaCutoff: 0.5
     - _AlphaToMask: 1
     - _Blend: 0
     - _BlendOp: 0
@@ -92,28 +104,45 @@ Material:
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
+    - _CausticsScale: 0.5
+    - _CausticsSpeed: 2
     - _ColorMode: 3
     - _Cull: 2
     - _Cutoff: 0.205
+    - _Depth: 1
     - _DetailNormalMapScale: 1
+    - _DistanceFade: 1000
+    - _DistanceFadeOffset: 500
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0.1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EdgesFade: 0.1
     - _EmissionEnabled: 1
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
+    - _FoamContrast: 0
+    - _FoamDistance: 1
+    - _FoamPower: 1
+    - _FoamScale: 1
+    - _FoamSpeed: 0.1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _LightingEnabled: 0
     - _Metallic: 0
+    - _MetallicPower: 1
     - _Mode: 1
+    - _NormalPower: 1
+    - _NormalScale: 1
+    - _NormalSpeed: 0.1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
+    - _RefractionPower: 1
+    - _SmoothnessPower: 1
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 1
     - _SoftParticlesFarFadeDistance: 6
@@ -123,14 +152,21 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _UVSec: 0
+    - _WavesHeight: 25
+    - _WavesScale: 10
+    - _WavesSpeed: 5
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
+    - _CausticsColor: {r: 0.54040575, g: 0.8679245, b: 0.8414827, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
+    - _DepthColor: {r: 0, g: 0.6810271, b: 0.6886792, a: 1}
+    - _DepthColor1: {r: 0, g: 0.6810271, b: 0.6886792, a: 1}
     - _EmissionColor: {r: 0.2702231, g: 0.2702231, b: 0.2702231, a: 1}
+    - _NormalDirection: {r: 1, g: 0, b: -1, a: 0.2}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

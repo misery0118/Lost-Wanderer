@@ -154,7 +154,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorVariation: {r: 0.8113208, g: 0.25426283, b: 0.14159843, a: 0}
+    - _ColorVariation: {r: 0.2830189, g: 0.09344963, b: 0.05473478, a: 0}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GradientColor: {r: 0.8584906, g: 0.23911107, b: 0.14983091, a: 0}

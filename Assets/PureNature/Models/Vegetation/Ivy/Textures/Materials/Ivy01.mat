@@ -2,21 +2,29 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ivy01
-  m_Shader: {fileID: 4800000, guid: 0f96a2937f6bace459a5fdaac39c0fb3, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _BASEWINDCHANNEL_R _DEPOSITCHANNEL_G _MICROWINDCHANNEL_R
-    _VERTEXCOLORCHANNEL_B
+  m_Shader: {fileID: 4800000, guid: a5c8d7c8b72e9f580b09cc4a2991d934, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHATEST_ON
+  - _BASEWINDCHANNEL_R
+  - _DEPOSITCHANNEL_G
+  - _MICROWINDCHANNEL_R
+  - _VERTEXCOLORCHANNEL_B
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -72,6 +80,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -92,8 +104,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _2ndNormalPower: 1
+    - _AlphaCutoff: 0.5
     - _BaseWindChannel: 0
     - _BlendNormals: 0
     - _BumpScale: 1
@@ -119,6 +133,7 @@ Material:
     - _MicroWindMultiplier: 1
     - _Mode: 1
     - _NoiseScale: 4.54
+    - _NoiseTiling: 1.09
     - _NormalAttenuation: 0
     - _NormalPower: 1
     - _OcclusionStrength: 1
@@ -143,7 +158,11 @@ Material:
     m_Colors:
     - _2ndColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color01: {r: 1, g: 0.32156855, b: 0, a: 1}
+    - _Color02: {r: 1, g: 0.32156855, b: 0, a: 1}
     - _ColorVariation: {r: 0.21505088, g: 0.3490566, b: 0.12348701, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GradientColor: {r: 0.32352027, g: 0.57547164, b: 0.124866344, a: 1}
     - _MainColor: {r: 0.5042214, g: 0.8113207, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
