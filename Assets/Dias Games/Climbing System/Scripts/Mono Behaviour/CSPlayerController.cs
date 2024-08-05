@@ -48,6 +48,8 @@ namespace DiasGames.Controller
         public float CurrentRecoil { get; private set; } = 0f;
         private float recoilReturnVel = 0;
 
+        private bool isAltToggled = false; // Variable to keep track of the toggle state
+
         private void Awake()
         {
             _scheduler = GetComponent<AbilityScheduler>();
@@ -100,6 +102,47 @@ namespace DiasGames.Controller
             if (CurrentRecoil > 0)
                 CurrentRecoil = Mathf.SmoothDamp(CurrentRecoil, 0, ref recoilReturnVel, 0.2f);
 
+            if (Keyboard.current.altKey.wasPressedThisFrame)
+            {
+                isAltToggled = !isAltToggled; // Toggle the state
+                if (isAltToggled)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+
+                    // Stop movement immediately when Alt is pressed
+                    Move = Vector2.zero;
+                    Look = Vector2.zero;
+                    Jump = false;
+                    Walk = false;
+                    Roll = false;
+                    Crouch = false;
+                    Crawl = false;
+                    Interact = false;
+                    Drop = false;
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                }
+            }
+
+            // Check for pause state and update cursor visibility
+            if (PauseMenu.GameIsPaused)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                if (!isAltToggled)
+                {
+                    Cursor.visible = hideCursor;
+                    Cursor.lockState = hideCursor ? CursorLockMode.Locked : CursorLockMode.None;
+                }
+            }
+
 #if ENABLE_LEGACY_INPUT_MANAGER
             LegacyInput();
 #endif
@@ -107,7 +150,12 @@ namespace DiasGames.Controller
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (!PauseMenu.GameIsPaused && !isAltToggled) // Check if the game is not paused and Alt is not toggled
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            	Cursor.visible = false;
+                CameraRotation();
+            }
         }
 
         private void Die()
@@ -192,6 +240,8 @@ namespace DiasGames.Controller
 
         public void LegacyInput()
         {
+            if (isAltToggled) return; // Disable all input if Alt is toggled
+
             Move.x = Input.GetAxis("Horizontal");
             Move.y = Input.GetAxis("Vertical");
 
@@ -219,44 +269,78 @@ namespace DiasGames.Controller
 
         public void OnMove(Vector2 value)
         {
-            Move = value;
+            if (!isAltToggled) // Disable move input if Alt is toggled
+            {
+                Move = value;
+            }
+            else
+            {
+                Move = Vector2.zero; // Ensure movement stops when Alt is toggled
+            }
         }
         public void OnLook(Vector2 value)
         {
-            Look = value;
+            if (!isAltToggled) // Disable look input if Alt is toggled
+            {
+                Look = value;
+            }
         }
         public void OnJump(bool value)
         {
-            Jump = value;
+            if (!isAltToggled) // Disable jump input if Alt is toggled
+            {
+                Jump = value;
+            }
         }
         public void OnWalk(bool value)
         {
-            Walk = value;
+            if (!isAltToggled) // Disable walk input if Alt is toggled
+            {
+                Walk = value;
+            }
         }
         public void OnRoll(bool value)
         {
-            Roll = value;
+            if (!isAltToggled) // Disable roll input if Alt is toggled
+            {
+                Roll = value;
+            }
         }
         public void OnCrouch(bool value)
         {
-            Crouch = value;
+            if (!isAltToggled) // Disable crouch input if Alt is toggled
+            {
+                Crouch = value;
+            }
         }
         public void OnCrawl(bool value)
         {
-            Crawl = value;
+            if (!isAltToggled) // Disable crawl input if Alt is toggled
+            {
+                Crawl = value;
+            }
         }
 
         public void OnZoom(bool value)
         {
-            Zoom = value;
+            if (!isAltToggled) // Disable zoom input if Alt is toggled
+            {
+                Zoom = value;
+            }
         }
         public void OnInteract(bool value)
         {
-            Interact = value;
+            if (!isAltToggled) // Disable interact input if Alt is toggled
+            {
+                Interact = value;
+            }
         }
         public void OnDrop(bool value)
         {
-            Drop = value;
+            if (!isAltToggled) // Disable drop input if Alt is toggled
+            {
+                Drop = value;
+            }
         }
 
 #if ENABLE_INPUT_SYSTEM
