@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Flashlight
   value: 1
   icon: {fileID: -970324004, guid: e65a6bfa112574e2cb95bb4d55e30ffe, type: 3}
+  iconPath: Icons/ItemIcon

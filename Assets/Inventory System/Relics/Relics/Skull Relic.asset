@@ -16,3 +16,4 @@ MonoBehaviour:
   relicName: Skull Relic
   value: 10
   icon: {fileID: -552359904, guid: 1b1e1a4c7b32749d48e98546100a1ad1, type: 3}
+  iconPath: Icons/RelicIcon

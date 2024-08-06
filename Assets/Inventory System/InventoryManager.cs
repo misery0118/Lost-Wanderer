@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
-using System.Threading.Tasks;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -31,40 +29,42 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         LoadInventory();
-        foreach(Items item in Itemss)
-        {
-            Debug.Log(item.id);
-        }
     }
 
     public void AddItems(Items item)
     {
         Itemss.Add(item);
+        SaveInventory();
     }
 
     public void RemoveItems(Items item)
     {
         Itemss.Remove(item);
+        SaveInventory();
     }
 
     public void AddRelics(Relics relic)
     {
         Relicss.Add(relic);
+        SaveInventory();
     }
 
     public void RemoveRelics(Relics relic)
     {
         Relicss.Remove(relic);
+        SaveInventory();
     }
 
     public void AddBrokenRelics(BrokenRelics brokenrelic)
     {
         BrokenRelicss.Add(brokenrelic);
+        SaveInventory();
     }
 
     public void RemoveBrokenRelics(BrokenRelics brokenrelic)
     {
         BrokenRelicss.Remove(brokenrelic);
+        SaveInventory();
     }
 
     public void ListItems()
@@ -80,7 +80,16 @@ public class InventoryManager : MonoBehaviour
             var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
 
             itemName.text = item.itemName;
-            itemIcon.sprite = item.icon;
+            //itemIcon.sprite = item.icon;
+            Sprite iconSprite = Resources.Load<Sprite>(item.iconPath);
+            if (iconSprite != null)
+            {
+                itemIcon.sprite = iconSprite;
+            }
+            else
+            {
+                Debug.LogWarning($"Icon not found at path: {item.iconPath}");
+            }
         }
     }
 
@@ -97,7 +106,16 @@ public class InventoryManager : MonoBehaviour
             var relicIcon = obj.transform.Find("RelicIcon").GetComponent<Image>();
 
             relicName.text = relics.relicName;
-            relicIcon.sprite = relics.icon;
+            //relicIcon.sprite = relics.icon;
+            Sprite iconSprite = Resources.Load<Sprite>(relics.iconPath);
+            if (iconSprite != null)
+            {
+                relicIcon.sprite = iconSprite;
+            }
+            else
+            {
+                Debug.LogWarning($"Icon not found at path: {relics.iconPath}");
+            }
         }
     }
 
@@ -114,7 +132,16 @@ public class InventoryManager : MonoBehaviour
             var brokenRelicIcon = obj.transform.Find("BrokenRelicIcon").GetComponent<Image>();
 
             brokenRelicName.text = brokenrelics.brokenrelicName;
-            brokenRelicIcon.sprite = brokenrelics.icon;
+            //brokenRelicIcon.sprite = brokenrelics.icon;
+            Sprite iconSprite = Resources.Load<Sprite>(brokenrelics.iconPath);
+            if (iconSprite != null)
+            {
+                brokenRelicIcon.sprite = iconSprite;
+            }
+            else
+            {
+                Debug.LogWarning($"Icon not found at path: {brokenrelics.iconPath}");
+            }
         }
     }
 
@@ -152,7 +179,7 @@ public class InventoryManager : MonoBehaviour
                 id = Itemss[i].id,
                 itemName = Itemss[i].itemName,
                 value = Itemss[i].value,
-                iconPath = Itemss[i].icon != null ? AssetDatabase.GetAssetPath(Itemss[i].icon) : ""
+                iconPath = Itemss[i].iconPath // Save the relative path
             };
             string json = JsonUtility.ToJson(itemData);
             PlayerPrefs.SetString("Item_" + i, json);
@@ -167,7 +194,7 @@ public class InventoryManager : MonoBehaviour
                 id = Relicss[i].id,
                 itemName = Relicss[i].relicName,
                 value = Relicss[i].value,
-                iconPath = Relicss[i].icon != null ? AssetDatabase.GetAssetPath(Relicss[i].icon) : ""
+                iconPath = Relicss[i].iconPath // Save the relative path
             };
             string json = JsonUtility.ToJson(relicData);
             PlayerPrefs.SetString("Relic_" + i, json);
@@ -182,7 +209,7 @@ public class InventoryManager : MonoBehaviour
                 id = BrokenRelicss[i].id,
                 itemName = BrokenRelicss[i].brokenrelicName,
                 value = BrokenRelicss[i].value,
-                iconPath = BrokenRelicss[i].icon != null ? AssetDatabase.GetAssetPath(BrokenRelicss[i].icon) : ""
+                iconPath = BrokenRelicss[i].iconPath // Save the relative path
             };
             string json = JsonUtility.ToJson(brokenRelicData);
             PlayerPrefs.SetString("BrokenRelic_" + i, json);
@@ -209,7 +236,7 @@ public class InventoryManager : MonoBehaviour
             item.id = itemData.id;
             item.itemName = itemData.itemName;
             item.value = itemData.value;
-            item.icon = !string.IsNullOrEmpty(itemData.iconPath) ? AssetDatabase.LoadAssetAtPath<Sprite>(itemData.iconPath) : null;
+            item.iconPath = itemData.iconPath;
             Itemss.Add(item);
         }
 
@@ -224,7 +251,7 @@ public class InventoryManager : MonoBehaviour
             relic.id = relicData.id;
             relic.relicName = relicData.itemName;
             relic.value = relicData.value;
-            relic.icon = !string.IsNullOrEmpty(relicData.iconPath) ? AssetDatabase.LoadAssetAtPath<Sprite>(relicData.iconPath) : null;
+            relic.iconPath = relicData.iconPath;
             Relicss.Add(relic);
         }
 
@@ -239,7 +266,7 @@ public class InventoryManager : MonoBehaviour
             brokenRelic.id = brokenRelicData.id;
             brokenRelic.brokenrelicName = brokenRelicData.itemName;
             brokenRelic.value = brokenRelicData.value;
-            brokenRelic.icon = !string.IsNullOrEmpty(brokenRelicData.iconPath) ? AssetDatabase.LoadAssetAtPath<Sprite>(brokenRelicData.iconPath) : null;
+            brokenRelic.iconPath = brokenRelicData.iconPath;
             BrokenRelicss.Add(brokenRelic);
         }
 

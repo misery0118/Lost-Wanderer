@@ -16,3 +16,4 @@ MonoBehaviour:
   brokenrelicName: Broken Relic 1
   value: 10
   icon: {fileID: 980668460, guid: bf0565110bacb4f2a8f3f929c136d0ac, type: 3}
+  iconPath: Icons/BrokenRelicIcon
