@@ -2,20 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Bush03
-  m_Shader: {fileID: 4800000, guid: 922009cd7df1b8349a0d4524598e1be5, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: a5c8d7c8b72e9f580b09cc4a2991d934, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -52,10 +56,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8821829e9fe2d2d4291ed537ba980085, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3f325d85d5772c146a5f73569fee8598, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -91,6 +99,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
     - _BumpScale: 1
@@ -111,6 +120,7 @@ Material:
     - _Mode: 0
     - _NoiseScale: 0.15
     - _NoiseScale1: 0.5
+    - _NoiseTiling: 1.09
     - _NormalAttenuation: 1
     - _NormalDistortion: 0
     - _NormalDistortion1: 1
@@ -134,6 +144,8 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0.3235204, g: 0.57547164, b: 0.12486646, a: 0}
+    - _Color01: {r: 1, g: 0.32156855, b: 0, a: 1}
+    - _Color02: {r: 1, g: 0.32156855, b: 0, a: 1}
     - _Color1: {r: 0.854902, g: 0.8588236, b: 0.854902, a: 0}
     - _ColorVariation: {r: 0, g: 0.2810894, b: 0.42452827, a: 0}
     - _ColorVariation1: {r: 1, g: 1, b: 1, a: 0}
@@ -144,3 +156,5 @@ Material:
     - _MainColor: {r: 0.59627324, g: 1, b: 0, a: 1}
     - _MainColor1: {r: 1, g: 0, b: 0, a: 0}
     - _TrunkColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
