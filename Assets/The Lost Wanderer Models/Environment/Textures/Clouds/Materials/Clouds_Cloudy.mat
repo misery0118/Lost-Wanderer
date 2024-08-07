@@ -41,9 +41,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _Coverage: 0.321
+    - _Coverage: 0.296
     - _Noise01Power: 1
-    - _Noise02Power: 0.437
+    - _Noise02Power: 0.756
     - _ScatteringPower: 22.4
     - _Softness: 1
     - _Tiling01: 3
@@ -52,7 +52,7 @@ Material:
     - _ViewDistance: 10000
     - __dirty: 0
     - _cloudsHeight: 200
-    - _cloudsPosition: 269.86002
+    - _cloudsPosition: 345.7
     m_Colors:
     - _CloudsColor: {r: 0.42986825, g: 0.6818222, b: 0.8679245, a: 1}
     - _DirectionSpeed: {r: 6.5, g: 7.8, b: 5.2, a: -7}

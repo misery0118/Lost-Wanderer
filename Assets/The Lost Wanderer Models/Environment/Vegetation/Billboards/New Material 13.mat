@@ -154,11 +154,11 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorVariation: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 0}
+    - _ColorVariation: {r: 0.8679245, g: 0.5393956, b: 0.18422928, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GradientColor: {r: 0.17407447, g: 0.2264151, b: 0.15485938, a: 0}
-    - _MainColor: {r: 0.35934404, g: 0.6415094, b: 0.26326096, a: 0}
+    - _GradientColor: {r: 0.8867924, g: 0.47598556, b: 0.12967247, a: 1}
+    - _MainColor: {r: 0.6431373, g: 0.5610584, b: 0.2627451, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TrunkColor: {r: 0.3207547, g: 0.27687788, b: 0.27687788, a: 0}
   m_BuildTextureStacks: []
