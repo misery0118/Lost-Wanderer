@@ -7,9 +7,12 @@ public class SaveLocation : MonoBehaviour
     public string saveKey; // Unique identifier for each save spot
     public float x, y, z;
 
+    public GameObject particleEffect;  // Reference to the particle effect
+    public GameObject lightEffect;     // Reference to the light effect
+
     void Start()
     {
-        // Optional: Load saved position when the game starts
+        // Optional: Load saved position and effect states when the game starts
         Load();
     }
 
@@ -19,10 +22,14 @@ public class SaveLocation : MonoBehaviour
         y = transform.position.y;
         z = transform.position.z;
 
-        // Use the unique saveKey to store position data
+        // Save position data
         PlayerPrefs.SetFloat(saveKey + "_x", x);
         PlayerPrefs.SetFloat(saveKey + "_y", y);
         PlayerPrefs.SetFloat(saveKey + "_z", z);
+
+        // Save the active state of the particle and light effects
+        PlayerPrefs.SetInt(saveKey + "_particleActive", particleEffect.activeSelf ? 1 : 0);
+        PlayerPrefs.SetInt(saveKey + "_lightActive", lightEffect.activeSelf ? 1 : 0);
 
         InventoryManager.Instance.SaveInventory();
         
@@ -46,6 +53,19 @@ public class SaveLocation : MonoBehaviour
         else
         {
             Debug.Log("No saved position found for " + saveKey);
+        }
+
+        // Load and set the active state of the particle and light effects
+        if (PlayerPrefs.HasKey(saveKey + "_particleActive"))
+        {
+            bool particleActive = PlayerPrefs.GetInt(saveKey + "_particleActive") == 1;
+            particleEffect.SetActive(particleActive);
+        }
+
+        if (PlayerPrefs.HasKey(saveKey + "_lightActive"))
+        {
+            bool lightActive = PlayerPrefs.GetInt(saveKey + "_lightActive") == 1;
+            lightEffect.SetActive(lightActive);
         }
     }
 }

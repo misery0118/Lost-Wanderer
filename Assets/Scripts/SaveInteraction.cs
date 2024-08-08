@@ -33,7 +33,12 @@ public class SaveInteraction : MonoBehaviour
         private void OnSave(InputAction.CallbackContext context)
         {
             if (currentSaveLocation != null)
-            {
+            {   
+
+                // Enable the particle and light effects when saving
+                currentSaveLocation.particleEffect.SetActive(true);
+                currentSaveLocation.lightEffect.SetActive(true);
+
                 // Save the position of the current save location
                 currentSaveLocation.Save();
 
@@ -87,11 +92,10 @@ public class SaveInteraction : MonoBehaviour
     void LoadPlayerPosition()
     {
         if (PlayerPrefs.HasKey("playerX") && PlayerPrefs.HasKey("playerY") && PlayerPrefs.HasKey("playerZ"))
-        {
+        {   
             float x = PlayerPrefs.GetFloat("playerX");
             float y = PlayerPrefs.GetFloat("playerY");
             float z = PlayerPrefs.GetFloat("playerZ");
-
             transform.position = new Vector3(x, y, z);
         }
     }
