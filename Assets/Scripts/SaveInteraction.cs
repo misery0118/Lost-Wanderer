@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class SaveInteraction : MonoBehaviour
@@ -10,25 +11,36 @@ public class SaveInteraction : MonoBehaviour
 
     private SaveLocation currentSaveLocation;
 
+    private InputAction SaveAction;
+
     void Start()
     {
         // Load the player's position at the start of the game
         LoadPlayerPosition();
+
+        var playerInput = FindObjectOfType<PlayerInput>();
+        SaveAction = playerInput.actions["Interact"];
+        
+        SaveAction.performed += OnSave;
     }
 
     void Update()
     {
         CheckForInteractable();
 
-        if (Input.GetKeyDown(KeyCode.E) && currentSaveLocation != null)
-        {
-            // Save the position of the current save location
-            currentSaveLocation.Save();
-
-            // Move the player to the saved position of the current save location
-            SavePlayerPosition();
-        }
     }
+
+        private void OnSave(InputAction.CallbackContext context)
+        {
+            if (currentSaveLocation != null)
+            {
+                // Save the position of the current save location
+                currentSaveLocation.Save();
+
+                // Save the player's position
+                SavePlayerPosition();
+            }
+        }
 
     void CheckForInteractable()
     {

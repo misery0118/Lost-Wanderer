@@ -13,11 +13,11 @@ public class ItemChecker : MonoBehaviour
 
     private void CheckItem()
     {
-        if (itemObj == null)
+       /* if (itemObj == null)
         {
             Debug.LogWarning("Item Obj is null.");
             return;
-        }
+        }*/  
 
         List<Items> inventory = InventoryManager.Instance.Itemss;
 

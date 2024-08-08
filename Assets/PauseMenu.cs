@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -8,29 +9,41 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
-
     public StarterAssets.StarterAssetsInputs starterAssetsInputs;
 
     private SceneLoader sceneLoader;
 
+    // Input action reference for the Pause action
+    private InputAction pauseAction;
+
     void Start()
     {
         sceneLoader = FindObjectOfType<SceneLoader>();
+
+        // Assuming you have a PlayerInput component in your scene, you can get the InputAction here
+        var playerInput = FindObjectOfType<PlayerInput>();
+        pauseAction = playerInput.actions["Pause"];
+
+        // Subscribe to the performed event
+        pauseAction.performed += OnPause;
     }
 
-    void Update()
+    private void OnPause(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (GameIsPaused)
         {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+            Resume();
         }
+        else
+        {
+            Pause();
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from the event when the object is destroyed to avoid memory leaks
+        pauseAction.performed -= OnPause;
     }
 
     public void Resume()
@@ -39,7 +52,6 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
 
-        // Ensure the cursor is locked and invisible
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -52,7 +64,6 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
 
-        // Set cursor lock state and visibility for pause
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

@@ -13,11 +13,11 @@ public class BrokenRelicChecker : MonoBehaviour
 
     private void CheckItem()
     {
-        if (itemObj == null)
+      /* if (itemObj == null)
         {
             Debug.LogWarning("Item Obj is null.");
             return;
-        }
+        }*/  
 
         List<BrokenRelics> inventory = InventoryManager.Instance.BrokenRelicss;
 
