@@ -16,11 +16,11 @@ public class RelicPickup : MonoBehaviour
     void Start()
     {
         // Get the player's transform (assuming the player has a tag "Player")
-        playerTransform = GameObject.FindGameObjectWithTag("PickItem").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Set up input action
         var playerInput = FindObjectOfType<PlayerInput>();
-        pickUpAction = playerInput.actions["Interact"];
+        pickUpAction = playerInput.actions["PickItem"];
         pickUpAction.performed += OnPickUp;
     }
 
