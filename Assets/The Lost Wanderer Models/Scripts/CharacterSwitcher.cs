@@ -1,151 +1,209 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
 
 public class CharacterSwitcher : MonoBehaviour
 {
-    public GameObject cat; // Reference to the Cat GameObject
-    public GameObject player; // Reference to the Player GameObject
-    public CinemachineStateDrivenCamera stateDrivenCamera; // Reference to the Cinemachine State Driven Camera
+    [Header("Input Actions")]
+    public InputActionProperty kuroSwitchAction;
+    public InputActionProperty raijinSwitchAction;
 
-    private InputAction kuroswitchAction;
-    private InputAction raijinswitchAction;
-    private Transform currentTarget;
+    [Header("Kuro Components")]
+    public Animator catAnimator;
+    public Avatar kuroAvatar;
+    public GameObject kuroGameObject;
+    public RuntimeAnimatorController catAnimatorController; // Ensure this is assigned
 
-    // Public fields to assign the specific camera follow setups in the Inspector
-    public Transform defaultFollowTransform;
-    public Transform crouchFollowTransform;
-    public Transform rollFollowTransform;
-    public Transform crawlFollowTransform;
-    public Transform zoomFollowTransform;
-    public Transform climbFollowTransform;
+    [Header("Raijin Components")]
+    public Animator raijinAnimator;
+    public Avatar raijinAvatar;
+    public MonoBehaviour raijinController;
+    public GameObject raijinGameObject;
+    public RuntimeAnimatorController raijinAnimatorController; // Ensure this is assigned
 
-    private Dictionary<CinemachineVirtualCamera, Vector3> originalCameraYPositions = new Dictionary<CinemachineVirtualCamera, Vector3>();
+    [Header("CS Character Controller")]
+    public GameObject CSCharacterController;
+    private Animator csCharacterControllerAnimator;
+    private MonoBehaviour csPlayerController;
+    private MonoBehaviour catController;
 
-    void Start()
+    private Animator currentAnimator;
+    private Avatar currentAvatar;
+    private MonoBehaviour currentController;
+
+    private void Start()
     {
-        var playerInput = FindObjectOfType<PlayerInput>();
-        if (playerInput == null)
+        // Initialize controllers and switch to Raijin as the default character
+        InitializeControllers();
+        SwitchToRaijin();
+    }
+
+    private void OnEnable()
+    {
+        kuroSwitchAction.action.performed += OnKuroSwitch;
+        raijinSwitchAction.action.performed += OnRaijinSwitch;
+    }
+
+    private void OnDisable()
+    {
+        kuroSwitchAction.action.performed -= OnKuroSwitch;
+        raijinSwitchAction.action.performed -= OnRaijinSwitch;
+    }
+
+    private void InitializeControllers()
+    {
+        if (CSCharacterController != null)
         {
-            Debug.LogError("PlayerInput component not found.");
-            return;
-        }
+            csPlayerController = CSCharacterController.GetComponent("CSPlayerController") as MonoBehaviour;
+            catController = CSCharacterController.GetComponent("CatController") as MonoBehaviour;
+            csCharacterControllerAnimator = CSCharacterController.GetComponent<Animator>();
 
-        kuroswitchAction = playerInput.actions["KuroSwitch"];
-        raijinswitchAction = playerInput.actions["RaijinSwitch"];
-        if (kuroswitchAction == null || raijinswitchAction == null)
-        {
-            Debug.LogError("Input actions not set up correctly.");
-            return;
-        }
-
-        // Subscribe to the performed event
-        kuroswitchAction.performed += OnKuroSwitch;
-        raijinswitchAction.performed += OnRaijinSwitch;
-
-        // Cache the original Y positions of each virtual camera
-        foreach (var vcam in stateDrivenCamera.GetComponentsInChildren<CinemachineVirtualCamera>())
-        {
-            originalCameraYPositions[vcam] = new Vector3(vcam.transform.position.x, vcam.transform.position.y, vcam.transform.position.z);
-        }
-
-        // Set initial state
-        SwitchToPlayer(); // Assuming player is the default character
-    }
-
-    private void OnKuroSwitch(InputAction.CallbackContext context)
-    {
-        Debug.Log("KuroSwitch action performed.");
-        SwitchToCat();
-    }
-
-    private void OnRaijinSwitch(InputAction.CallbackContext context)
-    {
-        Debug.Log("RaijinSwitch action performed.");
-        SwitchToPlayer();
-    }
-
-    private void SwitchToPlayer()
-    {
-        Debug.Log("Switching to Player");
-        player.SetActive(true);
-
-        UpdateCameraFollow(player.transform);
-    }
-
-    private void SwitchToCat()
-    {
-        Debug.Log("Switching to Cat");
-        cat.SetActive(true);
-
-        UpdateCameraFollow(cat.transform);
-    }
-
-    private void UpdateCameraFollow(Transform target)
-    {
-        currentTarget = target;
-        if (stateDrivenCamera != null)
-        {
-            foreach (var vcam in stateDrivenCamera.GetComponentsInChildren<CinemachineVirtualCamera>())
+            if (csPlayerController == null)
             {
-                if (vcam == null)
-                {
-                    Debug.LogError("Virtual camera is null.");
-                    continue;
-                }
-
-                // Set the camera's rotation to look at the target
-                Vector3 directionToTarget = target.position - vcam.transform.position;
-                directionToTarget.y = 0; // Keep the camera's vertical position fixed
-                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-                vcam.transform.rotation = targetRotation;
-
-                // Set the camera's position based on the state
-                if (vcam.name == "DefaultFollowCamera")
-                {
-                    vcam.transform.position = new Vector3(defaultFollowTransform.position.x, originalCameraYPositions[vcam].y, defaultFollowTransform.position.z);
-                }
-                else if (vcam.name == "CrouchFollowCamera")
-                {
-                    vcam.transform.position = new Vector3(crouchFollowTransform.position.x, originalCameraYPositions[vcam].y, crouchFollowTransform.position.z);
-                }
-                else if (vcam.name == "RollFollowCamera")
-                {
-                    vcam.transform.position = new Vector3(rollFollowTransform.position.x, originalCameraYPositions[vcam].y, rollFollowTransform.position.z);
-                }
-                else if (vcam.name == "CrawlFollowCamera")
-                {
-                    vcam.transform.position = new Vector3(crawlFollowTransform.position.x, originalCameraYPositions[vcam].y, crawlFollowTransform.position.z);
-                }
-                else if (vcam.name == "ZoomFollowCamera")
-                {
-                    vcam.transform.position = new Vector3(zoomFollowTransform.position.x, originalCameraYPositions[vcam].y, zoomFollowTransform.position.z);
-                }
-                else if (vcam.name == "ClimbFollowCamera")
-                {
-                    vcam.transform.position = new Vector3(climbFollowTransform.position.x, originalCameraYPositions[vcam].y, climbFollowTransform.position.z);
-                }
-
-                Debug.Log($"Updated camera: {vcam.name}, Position: {vcam.transform.position}, Rotation: {vcam.transform.rotation}");
+                Debug.LogError("CSPlayerController component not found on CSCharacterController");
+            }
+            if (catController == null)
+            {
+                Debug.LogError("CatController component not found on CSCharacterController");
+            }
+            if (csCharacterControllerAnimator == null)
+            {
+                Debug.LogError("Animator component not found on CSCharacterController");
             }
         }
         else
         {
-            Debug.LogWarning("StateDrivenCamera is null.");
+            Debug.LogError("CSCharacterController GameObject is not assigned.");
         }
     }
 
-    void LateUpdate()
+    private void OnKuroSwitch(InputAction.CallbackContext context)
     {
-        // Optionally update camera positions if needed
+        SwitchToKuro();
     }
 
-    void OnDestroy()
+    private void OnRaijinSwitch(InputAction.CallbackContext context)
     {
-        // Unsubscribe from the event when the object is destroyed to avoid memory leaks
-        kuroswitchAction.performed -= OnKuroSwitch;
-        raijinswitchAction.performed -= OnRaijinSwitch;
+        SwitchToRaijin();
+    }
+
+    private void SwitchToKuro()
+    {
+        // Disable the current controller if one is active
+        if (currentController != null)
+        {
+            Debug.Log("Disabling current controller.");
+            currentController.enabled = false;
+        }
+
+        // Enable Kuro components and game object
+        if (catAnimator != null)
+        {
+            Debug.Log("Enabling Kuro Animator.");
+            catAnimator.enabled = true;
+            catAnimator.avatar = kuroAvatar;
+            currentAnimator = catAnimator;
+            currentAvatar = kuroAvatar;
+        }
+
+        if (catController != null)
+        {
+            Debug.Log("Enabling Kuro CatController.");
+            catController.enabled = true;
+            currentController = catController;
+        }
+
+        // Enable Kuro GameObject and disable Raijin GameObject
+        if (kuroGameObject != null)
+        {
+            Debug.Log("Activating Kuro GameObject.");
+            kuroGameObject.SetActive(true);
+        }
+        
+        if (raijinGameObject != null)
+        {
+            Debug.Log("Deactivating Raijin GameObject.");
+            raijinGameObject.SetActive(false);
+        }
+
+        // Switch CS Character Controller to Kuro settings
+        if (csCharacterControllerAnimator != null)
+        {
+            Debug.Log("Updating Animator for Kuro.");
+            csCharacterControllerAnimator.runtimeAnimatorController = catAnimatorController;
+            csCharacterControllerAnimator.avatar = kuroAvatar;
+        }
+
+        // Disable CSPlayerController and enable CatController
+        if (csPlayerController != null)
+        {
+            Debug.Log("Disabling CSPlayerController.");
+            csPlayerController.enabled = false;
+        }
+        if (catController != null)
+        {
+            Debug.Log("Enabling CatController.");
+            catController.enabled = true;
+        }
+    }
+
+    private void SwitchToRaijin()
+    {
+        // Disable the current controller if one is active
+        if (currentController != null)
+        {
+            Debug.Log("Disabling current controller.");
+            currentController.enabled = false;
+        }
+
+        // Enable Raijin components and game object
+        if (raijinAnimator != null)
+        {
+            Debug.Log("Enabling Raijin Animator.");
+            raijinAnimator.enabled = true;
+            raijinAnimator.avatar = raijinAvatar;
+            currentAnimator = raijinAnimator;
+            currentAvatar = raijinAvatar;
+        }
+
+        if (raijinController != null)
+        {
+            Debug.Log("Enabling Raijin Controller.");
+            raijinController.enabled = true;
+            currentController = raijinController;
+        }
+
+        // Enable Raijin GameObject and disable Kuro GameObject
+        if (raijinGameObject != null)
+        {
+            Debug.Log("Activating Raijin GameObject.");
+            raijinGameObject.SetActive(true);
+        }
+
+        if (kuroGameObject != null)
+        {
+            Debug.Log("Deactivating Kuro GameObject.");
+            kuroGameObject.SetActive(false);
+        }
+
+        // Switch CS Character Controller to Raijin settings
+        if (csCharacterControllerAnimator != null)
+        {
+            Debug.Log("Updating Animator for Raijin.");
+            csCharacterControllerAnimator.runtimeAnimatorController = raijinAnimatorController;
+            csCharacterControllerAnimator.avatar = raijinAvatar;
+        }
+
+        // Disable CatController and enable CSPlayerController
+        if (catController != null)
+        {
+            Debug.Log("Disabling CatController.");
+            catController.enabled = false;
+        }
+
+        if (csPlayerController != null)
+        {
+            Debug.Log("Enabling CSPlayerController.");
+            csPlayerController.enabled = true;
+        }
     }
 }
