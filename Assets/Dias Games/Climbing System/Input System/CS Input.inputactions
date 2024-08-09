@@ -139,6 +139,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "KuroSwitch",
+                    "type": "Button",
+                    "id": "6f68ff15-4df4-4106-962d-d28478e1e8bd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RaijinSwitch",
+                    "type": "Button",
+                    "id": "d1e86694-9512-4ba0-948c-19303ae123bb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -403,6 +421,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PickItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e2ffa95-aa53-4396-a069-cad91171c1e9",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KuroSwitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ea46ab8-d992-4030-ab07-59d2ff3e4f29",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RaijinSwitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

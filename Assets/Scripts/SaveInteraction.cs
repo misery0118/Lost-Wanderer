@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class SaveInteraction : MonoBehaviour
 {
-    public float interactionDistance = 2.0f;
-    public LayerMask interactableLayer;
+    public float interactionDistance = 2.0f; // Radius to check for nearby save locations
+    public LayerMask interactableLayer; // Layer mask for filtering interactable objects
     public GameObject interactionUI; // Reference to the UI element
 
     private SaveLocation currentSaveLocation;
+    private List<SaveLocation> saveLocations = new List<SaveLocation>();
 
     private InputAction SaveAction;
 
@@ -19,52 +20,71 @@ public class SaveInteraction : MonoBehaviour
         LoadPlayerPosition();
 
         var playerInput = FindObjectOfType<PlayerInput>();
-        SaveAction = playerInput.actions["Interact"];
-        
-        SaveAction.performed += OnSave;
+        if (playerInput != null)
+        {
+            SaveAction = playerInput.actions["Interact"];
+            SaveAction.performed += OnSave;
+        }
+        else
+        {
+            Debug.LogError("PlayerInput component not found in the scene.");
+        }
+
+        // Find all SaveLocation objects in the scene
+        saveLocations.AddRange(FindObjectsOfType<SaveLocation>());
     }
 
     void Update()
     {
         CheckForInteractable();
-
     }
 
-        private void OnSave(InputAction.CallbackContext context)
+    private void OnSave(InputAction.CallbackContext context)
+    {
+        if (currentSaveLocation != null)
         {
-            if (currentSaveLocation != null)
-            {   
+            //Debug.Log("Saving location: " + currentSaveLocation.saveKey);
 
-                // Enable the particle and light effects when saving
-                currentSaveLocation.particleEffect.SetActive(true);
-                currentSaveLocation.lightEffect.SetActive(true);
+            // Enable the particle and light effects when saving
+            currentSaveLocation.particleEffect.SetActive(true);
+            currentSaveLocation.lightEffect.SetActive(true);
 
-                // Save the position of the current save location
-                currentSaveLocation.Save();
+            // Save the position of the current save location
+            currentSaveLocation.Save();
 
-                // Save the player's position
-                SavePlayerPosition();
-            }
+            // Save the player's position
+            SavePlayerPosition();
         }
+        else
+        {
+            Debug.LogWarning("No current save location to save to.");
+        }
+    }
 
     void CheckForInteractable()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
+        SaveLocation closestSaveLocation = null;
+        float closestDistance = interactionDistance;
 
-        if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
+        foreach (SaveLocation saveLocation in saveLocations)
         {
-            SaveLocation saveLocation = hit.collider.GetComponent<SaveLocation>();
-            if (saveLocation != null)
+            float distance = Vector3.Distance(transform.position, saveLocation.transform.position);
+           // Debug.Log("Distance to SaveLocation " + saveLocation.saveKey + ": " + distance);
+
+            if (distance <= interactionDistance)
             {
-                currentSaveLocation = saveLocation;
-                ShowInteractionUI(true);
+                if (closestSaveLocation == null || distance < closestDistance)
+                {
+                    closestSaveLocation = saveLocation;
+                    closestDistance = distance;
+                }
             }
-            else
-            {
-                currentSaveLocation = null;
-                ShowInteractionUI(false);
-            }
+        }
+
+        if (closestSaveLocation != null)
+        {
+            currentSaveLocation = closestSaveLocation;
+            ShowInteractionUI(true);
         }
         else
         {
@@ -78,6 +98,11 @@ public class SaveInteraction : MonoBehaviour
         if (interactionUI != null)
         {
             interactionUI.SetActive(show);
+            //Debug.Log("Interaction UI set to: " + show);
+        }
+        else
+        {
+            //Debug.LogWarning("Interaction UI is not assigned.");
         }
     }
 
@@ -87,16 +112,24 @@ public class SaveInteraction : MonoBehaviour
         PlayerPrefs.SetFloat("playerY", transform.position.y);
         PlayerPrefs.SetFloat("playerZ", transform.position.z);
         PlayerPrefs.Save();
+
+       // Debug.Log("Saved player position: " + transform.position);
     }
 
     void LoadPlayerPosition()
     {
         if (PlayerPrefs.HasKey("playerX") && PlayerPrefs.HasKey("playerY") && PlayerPrefs.HasKey("playerZ"))
-        {   
+        {
             float x = PlayerPrefs.GetFloat("playerX");
             float y = PlayerPrefs.GetFloat("playerY");
             float z = PlayerPrefs.GetFloat("playerZ");
             transform.position = new Vector3(x, y, z);
+
+            //Debug.Log("Loaded player position: " + transform.position);
+        }
+        else
+        {
+           // Debug.LogWarning("No saved player position found.");
         }
     }
 }
